@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>獎勵中心</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Noto Serif', serif;
+        }
+
+        .badge-popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .badge-popup-content {
+            width: 99vw;
+            height: 100%;
+            background-image: url('image2024/bg.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            overflow-y: auto;
+        }
+
+        .page-title {
+            color: white;
+            text-align: center;
+            font-size: 3rem;
+            font-weight: bold;
+            margin: 30px 0;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
+            letter-spacing: 2px;
+        }
+
+        .center-container {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            padding: 0 20px;
+        }
+
+        .badge-frames-container {
+            width: 100%;
+            display: grid;
+            grid-template-rows: repeat(4, auto);
+            padding: 20px 30px;
+        }
+
+        .badge-row {
+            display: flex;
+            flex-direction: column;
+            background-color: #27234361;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 15px;
+            transition: background-color 0.3s ease;
+        }
+
+        .badge-row:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 0 0px 3px #ffcc31;
+        }
+
+        .progress-row {
+            display: grid;
+            grid-template-columns: 12% 80%;
+            gap: 15px;
+            align-items: center;
+            padding: 0;
+        }
+
+        .progress-section {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+        }
+
+        .level-info {
+            display: flex;
+            align-items: center;
+            justify-content: start;
+            color: white;
+        }
+
+        .level-text {
+            font-size: 1.6rem;
+            font-weight: bold;
+            font-family: 'Noto Serif', serif;
+        }
+
+        .level-number {
+            color: white;
+            font-size: 5rem;
+            font-weight: bold;
+            text-shadow: 6px 3px 4px rgba(0, 0, 0, 0.5);
+            font-family: 'Noto Serif', serif;
+            transform: translateY(-20px);
+        }
+
+        .progress-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: transparent;
+            height: 20px;
+            margin-bottom: 20px;    
+        }
+
+        .progress-wrapper {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.5);
+            height: 100%;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #ffd803, #8BC34A);
+            transition: width 0.3s ease;
+        }
+
+        .target-badge {
+            width: 120px;
+            height: 120px;
+            background-image: url('image2024/badge-mini.png');
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            filter: brightness(0);
+            flex-shrink: 0;
+        }
+
+        .progress-bar[style*="width: 100%"] ~ .target-badge {
+            filter: brightness(1);
+            animation: unlockBadge 0.5s ease;
+        }
+
+        @keyframes unlockBadge {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .badge-heading {
+            width: 100%;
+            height: 150px;
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            transition: transform 0.2s ease;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .badge-small-frame {
+            width: 100%;
+            height: 120px;
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            transition: transform 0.2s ease;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 15px;
+            background-color: rgb(42 42 42 / 40%);
+        }
+
+        .badge-mini {
+            width: 70%;
+            height: 70%;
+            background-image: url('image2024/badge-mini.png');
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.4;
+            transition: opacity 0.3s ease;
+        }
+
+        .badge-mini.unlocked {
+            opacity: 1;
+        }
+
+        /* 添加動畫相關樣式 */
+        @keyframes badgeFloat {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+            100% { transform: translateY(0); }
+        }
+
+        @keyframes badgeGlow {
+            0% { 
+                filter: brightness(1) drop-shadow(0 0 0px rgba(255, 216, 3, 0));
+            }
+            50% { 
+                filter: brightness(1.5) drop-shadow(0 0 15px rgba(255, 216, 3, 0.8));
+            }
+            100% { 
+                filter: brightness(1) drop-shadow(0 0 0px rgba(255, 216, 3, 0));
+            }
+        }
+
+        /* 當hover row時觸發動畫 */
+        .badge-row:hover .badge-mini.unlocked {
+            animation: 
+                badgeFloat 2s ease-in-out infinite,
+                badgeGlow 2s ease-in-out infinite;
+        }
+
+        /* 為每個unlocked badge添加不同的動畫延遲，創造波浪效果 */
+        .badge-row:hover .badge-small-frame:nth-child(1) .badge-mini.unlocked { animation-delay: 0s; }
+        .badge-row:hover .badge-small-frame:nth-child(2) .badge-mini.unlocked { animation-delay: 0.2s; }
+        .badge-row:hover .badge-small-frame:nth-child(3) .badge-mini.unlocked { animation-delay: 0.4s; }
+        .badge-row:hover .badge-small-frame:nth-child(4) .badge-mini.unlocked { animation-delay: 0.6s; }
+        .badge-row:hover .badge-small-frame:nth-child(5) .badge-mini.unlocked { animation-delay: 0.8s; }
+        .badge-row:hover .badge-small-frame:nth-child(6) .badge-mini.unlocked { animation-delay: 1s; }
+        .badge-row:hover .badge-small-frame:nth-child(7) .badge-mini.unlocked { animation-delay: 1.2s; }
+        .badge-row:hover .badge-small-frame:nth-child(8) .badge-mini.unlocked { animation-delay: 1.4s; }
+
+        .badge-achievement-item {
+            height: 300px;
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            padding-bottom: 20px;
+        }
+
+        .badge-achievement-item:hover {
+            transform: scale(1.05);
+        }
+
+        .badge-achievement-title {
+            width: 70%;
+            height: 80px;
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .reading-card { background-image: url('image2024/reading-card.png'); }
+        .speaking-card { background-image: url('image2024/speaking-card.png'); }
+        .writing-card { background-image: url('image2024/writing-card.png'); }
+        .listening-card { background-image: url('image2024/listening-card.png'); }
+
+        .reading-title { background-image: url('image2024/reading-card-text.png'); }
+        .speaking-title { background-image: url('image2024/speaking-card-text.png'); }
+        .writing-title { background-image: url('image2024/writing-card-text.png'); }
+        .listening-title { background-image: url('image2024/listening-card-text.png'); }
+
+        .badge-close-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            font-family: 'Noto Serif', serif;
+        }
+
+        .badge-level-container {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 2;
+        }
+
+        .badge-stats {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .badge-medal-icon {
+            width: 20px;
+            height: 20px;
+            background-image: url('image2024/medals.png');
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .badge-number {
+            color: #fff;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .badge-level-text {
+            color: #fff;
+            font-size: 18px;
+            font-weight: bold;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        .badge-small-frame.reading::before { background-image: url('image2024/reading-card-frame-title.png'); }
+        .badge-small-frame.writing::before { background-image: url('image2024/writing-card-frame-title.png'); }
+        .badge-small-frame.speaking::before { background-image: url('image2024/speaking-card-frame-title.png'); }
+        .badge-small-frame.listening::before { background-image: url('image2024/listening-card-frame-title.png'); }
+
+        .badge-small-frame:hover {
+            transform: scale(1.1);
+        }
+
+        .reading-heading { background-image: url('image2024/reading-card.png'); }
+        .speaking-heading { background-image: url('image2024/speaking-card.png'); }
+        .writing-heading { background-image: url('image2024/writing-card.png'); }
+        .listening-heading { background-image: url('image2024/listening-card.png'); }
+
+        .badge-cards {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 15px;
+            padding: 10px 0;
+        }
+
+        @media screen and (max-width: 1200px) {
+            .badge-row {
+                grid-template-columns: repeat(5, 1fr);
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .badge-cards {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .badge-small-frame {
+                height: 140px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .badge-row {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .badge-small-frame {
+                height: 120px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="badge-popup-overlay">
+        <div class="badge-popup-content">
+            <button class="badge-close-button" onclick="closeBadgePopup()">×</button>
+            
+            <div class="center-container">
+                <h1 class="page-title">Badge Collection Center</h1>
+                <div class="badge-frames-container">
+                    <div class="badge-row">
+                        <div class="progress-row">
+                            <div class="badge-heading reading-heading">
+                                <span class="level-number">3</span>
+                            </div>
+                            <div class="progress-section">
+                                <div class="level-info">
+                                    <span class="level-text">Exp.</span>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-wrapper">
+                                        <div class="progress-bar" style="width: 75%"></div>
+                                    </div>
+                                    <div class="target-badge"></div>
+                                </div>
+                                <div class="badge-cards">
+                                    <div class="badge-small-frame reading">
+                                        <div class="badge-mini unlocked"></div>
+                                    </div>
+                                    <div class="badge-small-frame reading">
+                                        <div class="badge-mini unlocked"></div>
+                                    </div>
+                                    <div class="badge-small-frame reading">
+                                        <div class="badge-mini"></div>
+                                    </div>
+                                    <div class="badge-small-frame reading">
+                                        <div class="badge-mini"></div>
+                                    </div>
+                                    <div class="badge-small-frame reading">
+                                        <div class="badge-mini"></div>
+                                    </div>
+                                    <div class="badge-small-frame reading">
+                                        <div class="badge-mini"></div>
+                                    </div>
+                                    <div class="badge-small-frame reading">
+                                        <div class="badge-mini"></div>
+                                    </div>
+                                    <div class="badge-small-frame reading">
+                                        <div class="badge-mini"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="badge-row">
+                        <div class="progress-row">
+                            <div class="badge-heading speaking-heading">
+                                <span class="level-number">2</span>
+                            </div>
+                            <div class="progress-section">
+                                <div class="level-info">
+                                    <span class="level-text">Exp.</span>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-wrapper">
+                                        <div class="progress-bar" style="width: 45%"></div>
+                                    </div>
+                                    <div class="target-badge"></div>
+                                </div>
+                                <div class="badge-cards">
+                                    <div class="badge-small-frame speaking">
+                                        <div class="badge-mini unlocked"></div>
+                                    </div>
+                                    <div class="badge-small-frame speaking">
+                                        <div class="badge-mini unlocked"></div>
+                                    </div>
+                                    <div class="badge-small-frame speaking">
+                                        <div class="badge-mini"></div>
+                                    </div>
+                                    <div class="badge-small-frame speaking">
+                                        <div class="badge-mini"></div>
+                                    </div>
+                                    <div class="badge-small-frame speaking">
+                                        <div class="badge-mini"></div>
+                                    </div>
+                                    <div class="badge-small-frame speaking">
+                                        <div class="badge-mini"></div>
+                                    </div>
+                                    <div class="badge-small-frame speaking">
+                                        <div class="badge-mini"></div>
+                                    </div>
+                                    <div class="badge-small-frame speaking">
+                                        <div class="badge-mini"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="badge-row">
+                        <div class="progress-row">
+                            <div class="badge-heading writing-heading">
+                                <span class="level-number">2</span>
+                            </div>
+                            <div class="progress-section">
+                                <div class="level-info">
+                                    <span class="level-text">Exp.</span>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-wrapper">
+                                        <div class="progress-bar" style="width: 45%"></div>
+                                    </div>
+                                    <div class="target-badge"></div>
+                                </div>
+                                <div class="badge-cards">
+                                    <div class="badge-small-frame writing">
+                                        <div class="badge-mini unlocked"></div>
+                                    </div>
+                                    <div class="badge-small-frame writing">
+                                        <div class="badge-mini unlocked"></div>
+                                    </div>
+                                    <div class="badge-small-frame writing">
+                                        <div class="badge-mini"></div>
+                                    </div>
+                                    <div class="badge-small-frame writing">
+                                        <div class="badge-mini"></div>
+                                    </div>
+                                    <div class="badge-small-frame writing">
+                                        <div class="badge-mini"></div>
+                                    </div>
+                                    <div class="badge-small-frame writing">
+                                        <div class="badge-mini"></div>
+                                    </div>
+                                    <div class="badge-small-frame writing">
+                                        <div class="badge-mini"></div>
+                                    </div>
+                                    <div class="badge-small-frame writing">
+                                        <div class="badge-mini"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="badge-row">
+                        <div class="progress-row">
+                            <div class="badge-heading listening-heading">
+                                <span class="level-number">2</span>
+                            </div>
+                            <div class="progress-section">
+                                <div class="level-info">
+                                    <span class="level-text">Exp.</span>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-wrapper">
+                                        <div class="progress-bar" style="width: 45%"></div>
+                                    </div>
+                                    <div class="target-badge"></div>
+                                </div>
+                                <div class="badge-cards">
+                                    <div class="badge-small-frame listening">
+                                        <div class="badge-mini unlocked"></div>
+                                    </div>
+                                    <div class="badge-small-frame listening">
+                                        <div class="badge-mini unlocked"></div>
+                                    </div>
+                                    <div class="badge-small-frame listening">
+                                        <div class="badge-mini"></div>
+                                    </div>
+                                    <div class="badge-small-frame listening">
+                                        <div class="badge-mini"></div>
+                                    </div>
+                                    <div class="badge-small-frame listening">
+                                        <div class="badge-mini"></div>
+                                    </div>
+                                    <div class="badge-small-frame listening">
+                                        <div class="badge-mini"></div>
+                                    </div>
+                                    <div class="badge-small-frame listening">
+                                        <div class="badge-mini"></div>
+                                    </div>
+                                    <div class="badge-small-frame listening">
+                                        <div class="badge-mini"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <div class="achievements-container">
+                    <div class="badge-achievement-item reading-card">
+                        <div class="badge-achievement-title reading-title"></div>
+                    </div>
+                    <div class="badge-achievement-item speaking-card">
+                        <div class="badge-achievement-title speaking-title"></div>
+                    </div>
+                    <div class="badge-achievement-item writing-card">
+                        <div class="badge-achievement-title writing-title"></div>
+                    </div>
+                    <div class="badge-achievement-item listening-card">
+                        <div class="badge-achievement-title listening-title"></div>
+                    </div>
+                </div> -->
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function closeBadgePopup() {
+            document.querySelector('.badge-popup-overlay').style.display = 'none';
+        }
+    </script>
+</body>

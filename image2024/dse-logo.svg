@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="68" height="71" viewBox="0 0 68 71">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_100" data-name="Rectangle 100" width="68" height="71" fill="none"/>
+    </clipPath>
+    <clipPath id="clip-path-2">
+      <rect id="Rectangle_106" data-name="Rectangle 106" width="50.681" height="58.31" fill="none"/>
+    </clipPath>
+    <clipPath id="clip-path-3">
+      <rect id="Rectangle_105" data-name="Rectangle 105" width="36.233" height="12.276" fill="none"/>
+    </clipPath>
+    <clipPath id="clip-path-4">
+      <rect id="Rectangle_101" data-name="Rectangle 101" width="16.258" height="12.276" fill="none"/>
+    </clipPath>
+    <clipPath id="clip-path-5">
+      <rect id="Rectangle_102" data-name="Rectangle 102" width="8.118" height="12.276" fill="none"/>
+    </clipPath>
+    <clipPath id="clip-path-6">
+      <rect id="Rectangle_103" data-name="Rectangle 103" width="8.129" height="12.276" fill="none"/>
+    </clipPath>
+    <clipPath id="clip-path-7">
+      <rect id="Rectangle_104" data-name="Rectangle 104" width="3.729" height="12.276" fill="none"/>
+    </clipPath>
+  </defs>
+  <g id="Group_173" data-name="Group 173" transform="translate(0 0)">
+    <g id="Group_155" data-name="Group 155" transform="translate(0 0)">
+      <g id="Group_154" data-name="Group 154" clip-path="url(#clip-path)">
+        <path id="Path_85" data-name="Path 85" d="M10,0H58A10,10,0,0,1,68,10V58A10,10,0,0,1,58,68H10A10,10,0,0,1,0,58V10A10,10,0,0,1,10,0" transform="translate(0 0)" fill="#0ab5a4"/>
+      </g>
+    </g>
+    <g id="Group_172" data-name="Group 172" transform="translate(10 12.69)">
+      <g id="Group_171" data-name="Group 171" clip-path="url(#clip-path-2)">
+        <g id="Group_170" data-name="Group 170" transform="translate(7.223 37.937)" style="isolation: isolate">
+          <g id="Group_169" data-name="Group 169">
+            <g id="Group_168" data-name="Group 168" clip-path="url(#clip-path-3)">
+              <g id="Group_158" data-name="Group 158" style="isolation: isolate">
+                <g id="Group_157" data-name="Group 157">
+                  <g id="Group_156" data-name="Group 156" clip-path="url(#clip-path-4)">
+                    <text id="_" data-name="**" transform="translate(0 8.294)" fill="#fff" font-size="10" font-family="SarySoft-SemiBold, Sary Soft" font-weight="600"><tspan x="0" y="0" letter-spacing="0.4em">*</tspan><tspan y="0">*</tspan></text>
+                  </g>
+                </g>
+              </g>
+              <g id="Group_161" data-name="Group 161" transform="translate(16.258)" style="isolation: isolate">
+                <g id="Group_160" data-name="Group 160">
+                  <g id="Group_159" data-name="Group 159" clip-path="url(#clip-path-5)">
+                    <text id="_2" data-name="*" transform="translate(0 8.294)" fill="#fff" font-size="10" font-family="SarySoft-SemiBold, Sary Soft" font-weight="600"><tspan x="0" y="0">*</tspan></text>
+                  </g>
+                </g>
+              </g>
+              <g id="Group_164" data-name="Group 164" transform="translate(24.376)" style="isolation: isolate">
+                <g id="Group_163" data-name="Group 163">
+                  <g id="Group_162" data-name="Group 162" clip-path="url(#clip-path-6)">
+                    <text id="_3" data-name="*" transform="translate(0 8.294)" fill="#fff" font-size="10" font-family="SarySoft-SemiBold, Sary Soft" font-weight="600"><tspan x="0" y="0">*</tspan></text>
+                  </g>
+                </g>
+              </g>
+              <g id="Group_167" data-name="Group 167" transform="translate(32.505)" style="isolation: isolate">
+                <g id="Group_166" data-name="Group 166">
+                  <g id="Group_165" data-name="Group 165" clip-path="url(#clip-path-7)">
+                    <text id="_4" data-name="*" transform="translate(0 8.294)" fill="#fff" font-size="10" font-family="SarySoft-SemiBold, Sary Soft" font-weight="600"><tspan x="0" y="0">*</tspan></text>
+                  </g>
+                </g>
+              </g>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+    <path id="Path_86" data-name="Path 86" d="M20.842,32.371a25.425,25.425,0,0,1,5.771-.611c3.592,0,5.938.994,7.752,3.047,1.967,2.2,3.2,5.665,3.2,10.684,0,5.442-1.312,9.2-3.131,11.5-1.991,2.49-5.041,3.677-8.732,3.677a24.227,24.227,0,0,1-4.862-.419Zm4.274,23.173a6.513,6.513,0,0,0,1.493.111c3.877.05,6.426-3.162,6.426-9.951.009-5.9-2.294-9-5.975-9a6.343,6.343,0,0,0-1.944.245Zm19.457-.011a2.8,2.8,0,0,0,3.009-3.093c0-1.744-.9-2.772-3.17-3.969a8.937,8.937,0,0,1-5.222-8.409c0-4.841,2.71-8.522,7.161-8.522a8.169,8.169,0,0,1,4.834,1.429l-.946,5.148a6.773,6.773,0,0,0-3.952-1.348,2.585,2.585,0,0,0-2.754,2.746c0,1.8,1.048,2.6,3.5,3.992a8.833,8.833,0,0,1,4.9,8.5c0,4.741-2.42,8.809-7.632,8.809a9.045,9.045,0,0,1-5.348-1.765l.866-5.3A7.98,7.98,0,0,0,44.573,55.533ZM65.4,48.364H58.434v6.753h7.787v5.259H54.153v-28.4H65.816V37.24H58.434v5.915H65.4Z" transform="translate(-9.134 -13.822)" fill="#f6d43e"/>
+  </g>
+</svg>

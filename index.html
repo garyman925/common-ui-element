@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>詞彙學習統計</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #1f1b32;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        .voabs-learning-progress-board {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .voabs-learning-progress-board .learning-progress-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 1em;
+            background: #272343;
+            padding: 10px;
+            border-radius: 3%;
+        }
+
+        .voabs-learning-progress-board .learning-progress-container-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #ffd811;
+        }
+
+        .voabs-learning-progress-board .score-display-container {
+            display: flex;
+            text-align: center;
+            gap: 50px;
+            margin-bottom: 20px;
+        }
+
+        .voabs-learning-progress-board .score-display-container > div {
+            flex: 1;
+        }
+
+        .voabs-learning-progress-board .score-display-container-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            gap: 15px;
+        }
+
+        .voabs-learning-progress-board .score-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            border-radius: 50%;
+            background: #39c9c7;
+            color: #fff;
+        }
+
+        .voabs-learning-progress-board .hexagon-icon {
+            position: relative;
+            width: 150px;
+            height: 130px;
+            background: #698DD6;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 10px auto;
+            border-radius: 0;
+            padding: 0;
+        }
+
+        .voabs-learning-progress-board .hexagon-icon.hexagon-icon-lg {
+            width: 180px;
+        }
+
+        .voabs-learning-progress-board .crown-icon {
+            background-image: url(image2024/crown-icon.svg);
+            width: 60px;
+            height: 60px;
+            background-size: 100%;
+            background-repeat: no-repeat;
+            background-position: center;
+            position: absolute;
+            z-index: 2;
+        }
+
+        .voabs-learning-progress-board .stars-group-icon {
+            background-image: url(image2024/stars-group-icon.svg);
+            width: 80px;
+            height: 80px;
+            background-size: 100%;
+            background-repeat: no-repeat;
+            background-position: center;
+            position: absolute;
+            top: -14px;
+            z-index: 1;
+        }
+
+        .voabs-learning-progress-board .hexagon-icon::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            background: #272343;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            z-index: 1;
+        }
+
+        .voabs-learning-progress-board .hexagon-icon span {
+            position: relative;
+            z-index: 2;
+            color: #FFD803;
+            font-size: 3.5rem;
+            font-weight: bold;
+        }
+
+        .voabs-learning-progress-board .doughnut-bar {
+            position: relative;
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 10px auto;
+            --value: 0;
+        }
+
+        .voabs-learning-progress-board .doughnut-bar::before {
+            content: '';
+            position: absolute;
+            width: 80%;
+            height: 80%;
+            background: #272343;
+            border-radius: 50%;
+        }
+
+        .voabs-learning-progress-board .doughnut-bar span {
+            position: relative;
+            z-index: 2;
+            color: #FFD803;
+            font-size: 3.5rem;
+            font-weight: bold;
+        }
+
+        .voabs-learning-progress-board .score-badge {
+            color: #3058A8;
+            font-size: .85rem;
+            font-family: sans-serif;
+            font-weight: bold;
+            border-radius: 3px;
+            background: #ffd811;
+            padding: 5px 3px;
+            width: 100%;
+            position: absolute;
+            bottom: 63px;
+        }
+
+        .voabs-learning-progress-board .score-label {
+            color: #fff;
+            font-weight: bold;
+            font-size: 1.3rem;
+            font-family: sans-serif;
+            white-space: nowrap;
+        }
+
+        .voabs-learning-progress-board .progress-bar-container {
+            background-color: #2a2744;
+            border-radius: 10px;
+        }
+
+        .voabs-learning-progress-board .progress-bar {
+            height: 20px;
+            background-color: #3a3757;
+            border-radius: 20px;
+            margin: 20px 0;
+            border: 4px solid #fff;
+        }
+
+        .voabs-learning-progress-board .progress-labels {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-top: 10px;
+            gap: 10px;
+        }
+
+        .voabs-learning-progress-board .progress-label {
+            text-align: center;
+        }
+
+        .voabs-learning-progress-board .label-bubble {
+            background-color: #3a3757;
+            border-radius: 20px;
+            padding: 5px 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #fff;
+        }
+
+        .voabs-learning-progress-board .label-text {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #fff;
+            padding: 6px;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+</head>
+<body>
+    <div class="voabs-learning-progress-board">
+        
+        <div class="learning-progress-container">
+		
+            <span class="learning-progress-container-title">
+                You have mastered 420 vocabs,
+                and you are learning 420 vocabs
+            </span>
+            <div class="score-display-container">
+                
+                <div class="score-display-container-item">
+                    <div class="crown-icon"></div>
+                    <div class="score-icon hexagon-icon">
+                        <span>9</span>
+                    </div>
+                    <div class="score-badge">Days</div>
+                    <div class="score-label">
+                            Longest Combo!
+                    </div>
+                </div>
+                
+
+                <div class="score-display-container-item">
+                    <div class="stars-group-icon"></div>
+                    <div class="score-icon doughnut-bar" style="--progress: 70%">
+                        <span>700</span>
+                    </div>
+                    <div class="score-label">
+                        Mastered Level
+                    </div>
+                </div>
+
+                <div class="score-display-container-item">
+                    <div class="crown-icon"></div>
+                    <div class="score-icon hexagon-icon hexagon-icon-lg">
+                        <span>7777</span>
+                    </div>
+                    <div class="score-badge">Vocabulary</div>
+                    <div class="score-label">
+                        in Progress
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="progress-bar-container">
+                <div class="progress-bar" style="display: flex; overflow: hidden;">
+                    <div style="width: 33%; height: 100%; background-color: #FFF716;"></div>
+                    <div style="width: 33%; height: 100%; background-color: #B2EE16;"></div>
+                    <div style="width: 34%; height: 100%; background-color: #0dcaf0;"></div>
+                    <div style="width: 34%; height: 100%; background-color: #9A11E9;"></div>
+                    <div style="width: 34%; height: 100%; background-color: #4D0058;"></div>
+                </div>
+                <div class="progress-labels">
+                    <div class="progress-label">
+                        <div class="label-bubble" style="background-color: #FFF716;">
+                           <img src="image2024/icon-bulb-off.svg"  width="20">
+                           <img src="image2024/icon-bulb-off.svg"  width="20">
+                           <img src="image2024/icon-bulb-off.svg"  width="20">
+                           <img src="image2024/icon-bulb-on.svg"   width="20">
+                           <img src="image2024/icon-bulb-on.svg"   width="20">
+                        </div>
+                        <div class="label-text">220 (12%)</div>
+                    </div>
+                    <div class="progress-label">
+                        <div class="label-bubble" style="background-color: #B2EE16;">
+                            <img src="image2024/icon-bulb-off.svg"  width="20">
+                            <img src="image2024/icon-bulb-off.svg"  width="20">
+                            <img src="image2024/icon-bulb-off.svg"  width="20">
+                            <img src="image2024/icon-bulb-on.svg"   width="20">
+                            <img src="image2024/icon-bulb-on.svg"   width="20">
+                        </div>
+                        <div class="label-text">220 (12%)</div>
+                    </div>
+                    <div class="progress-label">
+                        <div class="label-bubble" style="background-color: #0dcaf0;">
+                            <img src="image2024/icon-bulb-off.svg"  width="20">
+                            <img src="image2024/icon-bulb-off.svg"  width="20">
+                            <img src="image2024/icon-bulb-off.svg"  width="20">
+                            <img src="image2024/icon-bulb-on.svg"   width="20">
+                            <img src="image2024/icon-bulb-on.svg"   width="20">
+                        </div>
+                        <div class="label-text">220 (12%)</div>
+                    </div>
+                    <div class="progress-label">
+                        <div class="label-bubble" style="background-color: #4AC7FF;">
+                            <img src="image2024/icon-bulb-off.svg"  width="20">
+                            <img src="image2024/icon-bulb-off.svg"  width="20">
+                            <img src="image2024/icon-bulb-off.svg"  width="20">
+                            <img src="image2024/icon-bulb-on.svg"   width="20">
+                            <img src="image2024/icon-bulb-on.svg"   width="20">
+                        </div>
+                        <div class="label-text">220 (12%)</div>
+                    </div>
+                    <div class="progress-label">
+                        <div class="label-bubble" style="background-color: #9A11E9;">
+                            <img src="image2024/icon-bulb-off.svg"  width="20">
+                            <img src="image2024/icon-bulb-off.svg"  width="20">
+                            <img src="image2024/icon-bulb-off.svg"  width="20">
+                            <img src="image2024/icon-bulb-on.svg"   width="20">
+                            <img src="image2024/icon-bulb-on.svg"   width="20">
+                        </div>
+                        <div class="label-text">220 (12%)</div>
+                    </div>
+                    <div class="progress-label">
+                        <div class="label-bubble" style="background-color: #4D0058;">
+                            <img src="image2024/icon-bulb-off.svg"  width="20">
+                            <img src="image2024/icon-bulb-off.svg"  width="20">
+                            <img src="image2024/icon-bulb-off.svg"  width="20">
+                            <img src="image2024/icon-bulb-on.svg"   width="20">
+                            <img src="image2024/icon-bulb-on.svg"   width="20">
+                        </div>
+                        <div class="label-text">220 (12%)</div>
+                    </div>
+                </div>
+            </div>
+
+	    </div>
+
+    </div>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const doughnutBars = document.querySelectorAll('.doughnut-bar');
+        const progressNums = document.querySelectorAll('.score-icon span');
+        const scoreLabels = document.querySelectorAll('.score-label');
+        const iconElements = document.querySelectorAll('.crown-icon, .stars-group-icon');
+        
+        // 先隱藏所有 score-label 和圖標
+        scoreLabels.forEach(label => {
+            label.style.opacity = '0';
+        });
+        iconElements.forEach(icon => {
+            icon.style.opacity = '0';
+            icon.style.transform = 'scale(0)';
+        });
+
+        // 創建一個 Promise 數組來追踪所有動畫
+        const animations = [];
+
+        // 處理環形進度條
+        doughnutBars.forEach(bar => {
+            const targetValue = 70;
+            animations.push(
+                anime({
+                    targets: bar,
+                    duration: 2000,
+                    easing: 'easeInOutQuad',
+                    update: function(anim) {
+                        const currentValue = Math.round(anim.progress * targetValue / 100);
+                        bar.style.background = `conic-gradient(
+                            #B8E5E6 0% ${currentValue}%, 
+                            #272343 ${currentValue}% 100%
+                        )`;
+                    }
+                }).finished
+            );
+        });
+
+        // 處理所有數字的動畫
+        progressNums.forEach(numSpan => {
+            const targetNumber = parseInt(numSpan.textContent);
+            animations.push(
+                anime({
+                    targets: numSpan,
+                    innerHTML: [0, targetNumber],
+                    round: 1,
+                    easing: 'easeInOutQuad',
+                    duration: 2000,
+                    update: function(anim) {
+                        numSpan.innerHTML = Math.round(anim.progress * targetNumber / 100);
+                    }
+                }).finished
+            );
+        });
+
+        // 當所有動畫完成後
+        Promise.all(animations).then(() => {
+            // 執行圖標的彈跳動畫
+            anime({
+                targets: iconElements,
+                scale: [0, 1.2, 1],
+                opacity: [0, 1],
+                translateY: [0, -10],
+                duration: 800,
+                delay: anime.stagger(150),
+                easing: 'spring(1, 80, 10, 0)'  // 使用彈簧效果
+            });
+
+            // 執行 score-label 的淡入動畫
+            anime({
+                targets: scoreLabels,
+                opacity: [0, 1],
+                translateY: [20, 0],
+                duration: 800,
+                delay: anime.stagger(100),
+                easing: 'easeOutQuad'
+            });
+        });
+    });
+    </script>
+</body>
+</html> 

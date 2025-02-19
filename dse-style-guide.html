@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reward Center Style Guide</title>
+    <style>
+        
+    /* 更新 Google Fonts 導入 */
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&family=PT+Sans:wght@400;700&family=Bree+Serif&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=PT+Serif:wght@400;700&display=swap');
+
+        :root {
+            /* 從 schedule-dev.css 導入的顏色系統 */
+            --primary-color: #ffd803;
+            --secondary-color: #e3f6f5;
+            --secondary-color-shadow: #cee7e6;
+            --tertiary-color: #bae8e8;
+            --light-color: #fffffe;
+            --dark-color: #272343;
+
+            /* 獎勵中心特定顏色 */
+            --color-bg-dark: rgb(42 42 42 / 40%);
+            --color-overlay: rgba(0, 0, 0, 0.5);
+            --color-text: var(--light-color);
+            --color-text-opacity: rgba(255, 255, 255, 0.9);
+
+            /* 其他系統顏色 */
+            --color-success: #0ab5a4;
+            --color-accent: #39c9c7;
+            --color-link: #698DD6;
+
+            /* 間距系統 */
+            --spacing-xs: 5px;
+            --spacing-sm: 15px;
+            --spacing-md: 20px;
+            --spacing-lg: 30px;
+            --spacing-xl: 40px;
+
+            /* 字體大小 */
+            --font-sm: 14px;
+            --font-md: 18px;
+            --font-lg: 24px;
+
+            /* 圓角 */
+            --border-radius: 6px;
+
+            /* 動畫 */
+            --transition-quick: 0.2s ease;
+            --transition-normal: 0.3s ease;
+
+            /* 陰影 */
+            --text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+
+            /* 斷點 */
+            --breakpoint-mobile: 480px;
+            --breakpoint-tablet: 768px;
+
+            /* 字型系統 - 統一使用 PT Serif */
+            --font-primary: 'Noto Serif', serif;
+            --font-secondary: 'Noto Serif', serif;
+            --font-display: 'Noto Serif', serif;
+        }
+
+        body {
+            margin: 0;
+            padding: 30px;
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+        }
+
+        .style-guide-section {
+            margin-bottom: 50px;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .style-guide-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        /* 顏色展示 */
+        .color-palette {
+            display: flex;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .color-item {
+            padding: 20px;
+            border-radius: 8px;
+            color: var(--dark-color);
+            position: relative;
+        }
+
+        .color-item.dark-text {
+            color: var(--light-color);
+        }
+
+        .color-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .color-value {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+
+        /* 組件展示 */
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        /* 複製原有組件的樣式 */
+        .badge-small-frame {
+            width: 100%;
+            height: 230px;
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            transition: var(--transition-quick);
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            padding-bottom: var(--spacing-lg);
+            border-radius: var(--border-radius);
+            background-color: var(--color-bg-dark);
+        }
+
+        .badge-achievement-item {
+            width: 100%;
+            height: 200px;
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            transition: var(--transition-normal);
+            cursor: pointer;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            padding-bottom: var(--spacing-md);
+        }
+
+        /* 代碼展示 */
+        .code-block {
+            background: #f8f8f8;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: monospace;
+        }
+
+
+        /* 文章排版樣式 */
+        .typography-demo {
+        }
+
+        .text-display {
+            font-family: var(--font-display);
+            color: var(--dark-color);
+            line-height: 1.3;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .text-heading {
+            font-family: var(--font-primary);
+            color: var(--dark-color);
+            line-height: 1.2;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .text-body {
+            font-family: var(--font-secondary);
+            color: var(--dark-color);
+            line-height: 1.5;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .font-example {
+            margin-bottom: var(--spacing-lg);
+            background: var(--light-color);
+            border-radius: var(--border-radius);
+        }
+
+        .font-name {
+            color: var(--color-success);
+            font-size: var(--font-sm);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .card-example {
+            background-color: var(--dark-color);
+            color: var(--secondary-color);
+            padding: var(--spacing-lg);
+            border-radius: var(--border-radius);
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+        }
+
+        .card-title {
+            font-family: var(--font-primary);
+            font-size: var(--font-md);
+            margin: 0;
+        }
+
+        .card-content {
+            font-family: var(--font-primary);
+            font-size: var(--font-sm);
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .hero-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: var(--spacing-lg);
+            color: var(--dark-color);
+            font-family: var(--font-primary);
+        }
+
+        .type-item {
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .type-label {
+            font-family: var(--font-primary);
+            font-size: var(--font-sm);
+            color: var(--color-success);
+            display: block;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .demo-article h1 {
+            font-size: 2.5rem;  /* 40px */
+            margin-bottom: var(--spacing-lg);
+            line-height: 1.2;
+        }
+
+        .demo-article h2 {
+            font-size: 2rem;    /* 32px */
+            margin-top: var(--spacing-xl);
+            margin-bottom: var(--spacing-md);
+            line-height: 1.3;
+        }
+
+        .demo-article h3 {
+            font-size: 1.5rem;  /* 24px */
+            margin-top: var(--spacing-lg);
+            margin-bottom: var(--spacing-sm);
+            line-height: 1.4;
+        }
+
+        .demo-article h4 {
+            font-size: 1.25rem; /* 20px */
+            margin-top: var(--spacing-md);
+            margin-bottom: var(--spacing-sm);
+            line-height: 1.4;
+        }
+
+        .demo-article h5 {
+            font-size: 1.1rem;  /* 17.6px */
+            margin-top: var(--spacing-sm);
+            margin-bottom: var(--spacing-xs);
+            line-height: 1.5;
+        }
+
+        .demo-article h6 {
+            font-size: 1rem;    /* 16px */
+            margin-top: var(--spacing-sm);
+            margin-bottom: var(--spacing-xs);
+            font-weight: bold;
+            line-height: 1.5;
+        }
+
+        /* 確保所有標題使用主要字體 */
+        .demo-article h1,
+        .demo-article h2,
+        .demo-article h3,
+        .demo-article h4,
+        .demo-article h5,
+        .demo-article h6 {
+            font-family: var(--font-primary);
+            color: var(--dark-color);
+            font-weight: bold;
+        }
+
+        .demo-article ul {
+            margin: var(--spacing-md) 0;
+            padding-left: var(--spacing-xl);
+        }
+
+        .demo-article li {
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .text-subheading {
+            font-family: var(--font-primary);
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--dark-color);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        /* 導航欄樣式 */
+        .style-guide-nav {
+            position: sticky;
+            top: 0;
+            overflow: hidden;
+            background: var(--secondary-color);
+            padding: var(--spacing-md);
+            margin-bottom: var(--spacing-md);
+            border-bottom: 1px solid var(--secondary-color-shadow);
+            z-index: 100;
+        }
+
+        .nav-list {
+            display: flex;
+            gap: var(--spacing-md);
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            overflow-x: auto;
+        }
+
+        .nav-link {
+            color: var(--dark-color);
+            text-decoration: none;
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--border-radius);
+            font-family: var(--font-primary);
+            font-size: var(--font-sm);
+            white-space: nowrap;
+            transition: var(--transition-quick);
+        }
+
+        .nav-link:hover {
+            background: var(--secondary-color);
+        }
+
+        /* 為每個 section 添加 ID */
+        .style-guide-section {
+            scroll-margin-top: 80px; /* 確保滾動時標題不會被導航欄遮擋 */
+        }
+
+        /* 按鈕網格布局 */
+        .button-grid {
+            display: flex;
+            gap: var(--spacing-lg);
+        }
+
+        .button-demo {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+            align-items: flex-start;
+        }
+
+        /* 基礎按鈕樣式 - 適中的 padding */
+        .btn {
+            font-family: var(--font-primary);
+            font-size: var(--font-md);
+            padding: var(--spacing-sm) var(--spacing-md); /* 改回 sm 但保持 md */
+            border-radius: var(--border-radius);
+            border: none;
+            cursor: pointer;
+            transition: all var(--transition-quick);
+            font-weight: 500;
+        }
+
+        /* Primary Button */
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--dark-color);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Secondary Button */
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            color: var(--dark-color);
+            border: 2px solid var(--secondary-color-shadow);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--tertiary-color);
+            border-color: var(--tertiary-color);
+        }
+
+        /* Text Button - 特別調整 padding */
+        .btn-text {
+            background-color: transparent;
+            color: var(--dark-color);
+            padding: var(--spacing-xs) var(--spacing-sm); /* 文字按鈕可以保持較小的 padding */
+            text-decoration: underline;
+            text-underline-offset: 4px;
+        }
+
+        .btn-text:hover {
+            color: var(--color-accent);
+        }
+
+        /* Success Button */
+        .btn-success {
+            background-color: var(--color-success);
+            color: var(--light-color);
+        }
+
+        .btn-success:hover {
+            filter: brightness(1.1);
+        }
+
+        /* Icon Button - 調整圖標大小和間距 */
+        .btn-icon {
+            background-color: var(--primary-color);
+            color: var(--dark-color);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            padding: var(--spacing-sm) var(--spacing-md); /* 改回 sm 但保持 md */
+        }
+
+        .btn-icon:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-icon-img {
+            width: 24px; /* 從 20px 增加到 24px */
+            height: 24px;
+            object-fit: contain;
+        }
+
+        /* 調整卡片內按鈕的樣式 */
+        .card-example .btn-secondary {
+            margin-top: auto; /* 將按鈕推到卡片底部 */
+            align-self: flex-start; /* 按鈕靠左對齊 */
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+
+        .card-example .btn-secondary:hover {
+            background-color: var(--tertiary-color);
+            border-color: var(--tertiary-color);
+        }
+
+        /* 卡片變體樣式 */
+        .card-light {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            border: 1px solid var(--secondary-color-shadow);
+        }
+
+        .card-success {
+            background-color: var(--color-success);
+            color: var(--light-color);
+        }
+
+        .card-secondary {
+            background-color: var(--secondary-color);
+            color: var(--dark-color);
+            border: 1px solid var(--secondary-color-shadow);
+        }
+
+        /* 新增按鈕變體 */
+        .btn-light {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            border: 1px solid var(--secondary-color-shadow);
+        }
+
+        .btn-light:hover {
+            background-color: var(--secondary-color);
+        }
+
+        /* 調整卡片內按鈕位置 */
+        .card-example .btn {
+            margin-top: auto;
+            align-self: flex-start;
+        }
+
+        /* 調整卡片內文字按鈕顏色 */
+        .card-secondary .btn-text {
+            color: var(--dark-color);
+        }
+
+        .card-success .btn-text {
+            color: var(--light-color);
+        }
+
+        /* Tab 相關樣式 */
+        .tab-demo {
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .tab-container {
+            display: flex;
+            gap: 20px; /* 移除間距使按鈕相連 */
+            padding: 0;
+            background: var(--light-color);
+            border-bottom: 2px solid var(--secondary-color);
+        }
+
+        .tab-button {
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border: none;
+            border-radius: 16px 16px 0 0;
+            background: var(--secondary-color);
+            color: var(--dark-color);
+            font-family: var(--font-primary);
+            font-size: var(--font-md);
+            cursor: pointer;
+            transition: all var(--transition-quick);
+            border: 1px solid var(--secondary-color-shadow);
+            border-bottom: none;
+            margin-bottom: -2px;
+            
+            /* 新增 flex 布局以對齊圖標和文字 */
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+
+        .tab-icon {
+            width: 20px;
+            height: 20px;
+            object-fit: contain;
+        }
+
+        .tab-button.active {
+            background: var(--primary-color);
+            color: var(--dark-color);
+            font-weight: bold;
+            border-color: var(--primary-color);
+        }
+
+        .tab-button:hover:not(.active) {
+            background: var(--tertiary-color);
+            border-color: var(--tertiary-color);
+        }
+
+        /* 深色版本 - 只改變按鈕顏色 */
+        .tab-container.dark {
+            background: var(--light-color); /* 改回淺色背景 */
+            border-bottom-color: var(--dark-color); /* 改用深色邊框 */
+        }
+
+        .tab-container.dark .tab-button {
+            background: var(--dark-color); /* 按鈕使用深色背景 */
+            color: var(--light-color);
+            border-color: var(--dark-color);
+        }
+
+        .tab-container.dark .tab-button.active {
+            background: var(--primary-color);
+            color: var(--dark-color);
+            border-color: var(--primary-color);
+        }
+
+        .tab-container.dark .tab-button:hover:not(.active) {
+            background: var(--color-bg-dark); /* 懸浮時使用半透明深色 */
+            color: var(--light-color);
+            border-color: var(--dark-color);
+        }
+
+        /* 按鈕狀態展示相關樣式 */
+        .button-states {
+            margin-top: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .button-row {
+            display: flex;
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-sm);
+        }
+
+        .state-demo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+
+        .state-label {
+            font-size: var(--font-sm);
+            color: var(--color-success);
+        }
+
+        /* 模擬狀態 */
+        .hover-state {
+            position: relative;
+        }
+
+        .hover-state.btn-primary {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            filter: brightness(1.1);
+        }
+
+        .hover-state.btn-secondary {
+            background-color: var(--tertiary-color);
+            border-color: var(--tertiary-color);
+        }
+
+        .active-state.btn-primary {
+            transform: translateY(1px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .active-state.btn-secondary {
+            background-color: var(--secondary-color-shadow);
+            border-color: var(--secondary-color-shadow);
+        }
+
+        /* 禁用狀態 */
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* 深色按鈕樣式 */
+        .btn-dark {
+            background-color: var(--dark-color);
+            color: var(--light-color);
+        }
+
+        .btn-dark:hover {
+            background-color: var(--color-bg-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .hover-state.btn-dark {
+            background-color: var(--color-bg-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .active-state.btn-dark {
+            transform: translateY(1px);
+            background-color: var(--dark-color);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        /* 新增文章相關樣式 */
+        .article-section {
+            margin: var(--spacing-xl) 0;
+        }
+
+        .skill-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-md);
+        }
+
+        .long-text {
+            max-width: 70ch;
+            line-height: 1.6;
+        }
+
+        .short-text {
+            max-width: 50ch;
+            line-height: 1.5;
+        }
+
+        .tips-container {
+            max-width: 400px;
+        }
+
+        .with-cards {
+            margin: var(--spacing-xl) 0;
+        }
+
+        /* 卡片內容區塊樣式 */
+        .card-section {
+            margin-bottom: var(--spacing-md);
+        }
+
+        .achievement-list {
+            list-style: none;
+            padding: 0;
+            margin: var(--spacing-sm) 0;
+        }
+
+        .achievement-list li {
+            margin-bottom: var(--spacing-xs);
+            font-family: var(--font-primary);
+            font-size: var(--font-sm);
+        }
+
+        .milestone-item {
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .milestone-title {
+            font-family: var(--font-primary);
+            font-size: var(--font-sm);
+            font-weight: bold;
+            margin: 0 0 var(--spacing-xs);
+        }
+
+        .milestone-desc {
+            font-size: var(--font-sm);
+            margin: 0;
+            opacity: 0.9;
+        }
+
+        /* 調整深色卡片內的標題顏色 */
+        .card-example .card-title,
+        .card-example .text-subheading,
+        .card-example .milestone-title {
+            color: var(--secondary-color);
+        }
+
+        /* 淺色卡片保持深色文字 */
+        .card-example.card-light .card-title,
+        .card-example.card-light .text-subheading,
+        .card-example.card-light .milestone-title,
+        .card-example.card-secondary .card-title,
+        .card-example.card-secondary .text-subheading,
+        .card-example.card-secondary .milestone-title {
+            color: var(--dark-color);
+        }
+
+        /* 標題層級樣式 */
+        .font-demo-h1,
+        .font-demo-h2,
+        .font-demo-h3,
+        .font-demo-h4,
+        .font-demo-h5,
+        .font-demo-h6 {
+            font-family: var(--font-primary);
+            color: var(--dark-color);
+        }
+
+        /* 間距示例樣式 */
+        .spacing-demo {
+            font-family: var(--font-primary);
+        }
+
+        .demo-heading,
+        .demo-subheading,
+        .demo-paragraph {
+            font-family: var(--font-primary);
+        }
+
+        .font-family-info {
+            padding: var(--spacing-md);
+            background: var(--secondary-color);
+            border-radius: var(--border-radius);
+        }
+
+        .font-info-item {
+            margin-bottom: var(--spacing-sm);
+            font-family: var(--font-primary);
+        }
+
+        .font-label {
+            font-weight: bold;
+            color: var(--dark-color);
+            margin-right: var(--spacing-sm);
+        }
+
+        .font-value {
+            color: var(--color-success);
+        }
+
+        /* Logo 區域樣式 */
+        .style-guide-header {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-md);
+            padding-bottom: var(--spacing-lg);
+            border-bottom: 1px solid var(--secondary-color-shadow);
+        }
+
+        .style-guide-logo {
+            height: 80px;
+            width: auto;
+        }
+
+        .style-guide-title-main {
+            font-family: var(--font-primary);
+            font-size: var(--font-lg);
+            color: var(--dark-color);
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- 在 body 開始處添加 -->
+    <header class="style-guide-header">
+        <img src="image2024/dse-logo.svg" alt="DSE Logo" class="style-guide-logo">
+        <h1 class="style-guide-title-main">Style Guide</h1>
+    </header>
+
+    <!-- 更新導航欄，移除 Breakpoints 連結 -->
+    <nav class="style-guide-nav">
+        <ul class="nav-list">
+            <li><a href="#colors" class="nav-link">Colors</a></li>
+            <li><a href="#buttons" class="nav-link">Buttons</a></li>
+            <li><a href="#tabs" class="nav-link">Tabs</a></li>
+            <li><a href="#components" class="nav-link">Components</a></li>
+            <li><a href="#font-system" class="nav-link">Font System</a></li>
+            <li><a href="#typography-examples" class="nav-link">Typography Examples</a></li>
+        </ul>
+    </nav>
+
+    <!-- 為每個 section 添加對應的 ID -->
+    <div id="colors" class="style-guide-section">
+        <h2 class="style-guide-title">Color System</h2>
+        <div class="color-palette">
+            <div class="color-item" style="background: var(--primary-color)">
+                <div class="color-name">Primary Color</div>
+                <div class="color-value">#ffd803</div>
+            </div>
+            <div class="color-item" style="background: var(--secondary-color)">
+                <div class="color-name">Secondary Color</div>
+                <div class="color-value">#e3f6f5</div>
+            </div>
+            <div class="color-item" style="background: var(--tertiary-color)">
+                <div class="color-name">Tertiary Color</div>
+                <div class="color-value">#bae8e8</div>
+            </div>
+            <div class="color-item dark-text" style="background: var(--dark-color)">
+                <div class="color-name">Dark Color</div>
+                <div class="color-value">#272343</div>
+            </div>
+            <div class="color-item" style="background: var(--light-color)">
+                <div class="color-name">Light Color</div>
+                <div class="color-value">#fffffe</div>
+            </div>
+            <div class="color-item" style="background: var(--color-success)">
+                <div class="color-name">Success Color</div>
+                <div class="color-value">#0ab5a4</div>
+            </div>
+            <div class="color-item" style="background: var(--color-accent)">
+                <div class="color-name">Accent Color</div>
+                <div class="color-value">#39c9c7</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="buttons" class="style-guide-section">
+        <h2 class="style-guide-title">Button Styles</h2>
+        
+        <!-- 基本按鈕樣式展示 -->
+        <div class="button-grid">
+            <!-- Primary Button -->
+            <div class="button-demo">
+                <span class="type-label">Primary Button</span>
+                <button class="btn btn-primary">Get Started</button>
+            </div>
+
+            <!-- Secondary Button -->
+            <div class="button-demo">
+                <span class="type-label">Secondary Button</span>
+                <button class="btn btn-secondary">Learn More</button>
+            </div>
+
+            <!-- Text Button -->
+            <div class="button-demo">
+                <span class="type-label">Text Button</span>
+                <button class="btn btn-text">View Details</button>
+            </div>
+
+            <!-- Success Button -->
+            <div class="button-demo">
+                <span class="type-label">Success Button</span>
+                <button class="btn btn-success">Complete</button>
+            </div>
+
+            <!-- Dark Button -->
+            <div class="button-demo">
+                <span class="type-label">Dark Button</span>
+                <button class="btn btn-dark">View More</button>
+            </div>
+
+            <!-- Icon Button -->
+            <div class="button-demo">
+                <span class="type-label">Icon Button</span>
+                <button class="btn btn-icon">
+                    <img src="image2024/demo-icon.svg" alt="Demo Icon" class="btn-icon-img">
+                    <span>Start Learning</span>
+                </button>
+            </div>
+        </div>
+
+        <h3 class="style-guide-subtitle">Button States</h3>
+        
+        <!-- Primary Button States -->
+        <div class="button-states">
+            <span class="type-label">Primary Button States</span>
+            <div class="button-row">
+                <div class="state-demo">
+                    <button class="btn btn-primary">Default</button>
+                    <span class="state-label">Default</span>
+                </div>
+                <div class="state-demo">
+                    <button class="btn btn-primary hover-state">Hover</button>
+                    <span class="state-label">Hover</span>
+                </div>
+                <div class="state-demo">
+                    <button class="btn btn-primary active-state">Active</button>
+                    <span class="state-label">Active</span>
+                </div>
+                <div class="state-demo">
+                    <button class="btn btn-primary" disabled>Disabled</button>
+                    <span class="state-label">Disabled</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Secondary Button States -->
+        <div class="button-states">
+            <span class="type-label">Secondary Button States</span>
+            <div class="button-row">
+                <div class="state-demo">
+                    <button class="btn btn-secondary">Default</button>
+                    <span class="state-label">Default</span>
+                </div>
+                <div class="state-demo">
+                    <button class="btn btn-secondary hover-state">Hover</button>
+                    <span class="state-label">Hover</span>
+                </div>
+                <div class="state-demo">
+                    <button class="btn btn-secondary active-state">Active</button>
+                    <span class="state-label">Active</span>
+                </div>
+                <div class="state-demo">
+                    <button class="btn btn-secondary" disabled>Disabled</button>
+                    <span class="state-label">Disabled</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dark Button States -->
+        <div class="button-states">
+            <span class="type-label">Dark Button States</span>
+            <div class="button-row">
+                <div class="state-demo">
+                    <button class="btn btn-dark">Default</button>
+                    <span class="state-label">Default</span>
+                </div>
+                <div class="state-demo">
+                    <button class="btn btn-dark hover-state">Hover</button>
+                    <span class="state-label">Hover</span>
+                </div>
+                <div class="state-demo">
+                    <button class="btn btn-dark active-state">Active</button>
+                    <span class="state-label">Active</span>
+                </div>
+                <div class="state-demo">
+                    <button class="btn btn-dark" disabled>Disabled</button>
+                    <span class="state-label">Disabled</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="tabs" class="style-guide-section">
+        <h2 class="style-guide-title">Tab Styles</h2>
+        
+        <!-- 基本 Tab 樣式 -->
+        <div class="tab-demo">
+            <span class="type-label">Basic Tabs</span>
+            <div class="tab-container">
+                <button class="tab-button active">
+                    <img src="image2024/demo-icon.svg" alt="Reading Icon" class="tab-icon">
+                    Reading
+                </button>
+                <button class="tab-button">
+                    <img src="image2024/demo-icon.svg" alt="Writing Icon" class="tab-icon">
+                    Writing
+                </button>
+                <button class="tab-button">
+                    <img src="image2024/demo-icon.svg" alt="Speaking Icon" class="tab-icon">
+                    Speaking
+                </button>
+                <button class="tab-button">
+                    <img src="image2024/demo-icon.svg" alt="Listening Icon" class="tab-icon">
+                    Listening
+                </button>
+            </div>
+        </div>
+
+        <!-- 深色背景 Tab -->
+        <div class="tab-demo">
+            <span class="type-label">Dark Background Tabs</span>
+            <div class="tab-container dark">
+                <button class="tab-button active">
+                    <img src="image2024/demo-icon.svg" alt="Reading Icon" class="tab-icon">
+                    Reading
+                </button>
+                <button class="tab-button">
+                    <img src="image2024/demo-icon.svg" alt="Writing Icon" class="tab-icon">
+                    Writing
+                </button>
+                <button class="tab-button">
+                    <img src="image2024/demo-icon.svg" alt="Speaking Icon" class="tab-icon">
+                    Speaking
+                </button>
+                <button class="tab-button">
+                    <img src="image2024/demo-icon.svg" alt="Listening Icon" class="tab-icon">
+                    Listening
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="components" class="style-guide-section">
+        <h2 class="style-guide-title">Components</h2>
+        
+        <!-- 添加卡片樣式說明 -->
+        <div class="font-example">
+            <div class="font-family-info">
+                <p class="font-info-item">
+                    <span class="font-label">Border Radius:</span>
+                    <span class="font-value">var(--border-radius) / 6px</span>
+                </p>
+                <p class="font-info-item">
+                    <span class="font-label">Padding:</span>
+                    <span class="font-value">var(--spacing-lg) / 30px</span>
+                </p>
+                <p class="font-info-item">
+                    <span class="font-label">Gap:</span>
+                    <span class="font-value">var(--spacing-sm) / 15px</span>
+                </p>
+                <p class="font-info-item">
+                    <span class="font-label">Min Height:</span>
+                    <span class="font-value">200px</span>
+                </p>
+                <p class="font-info-item">
+                    <span class="font-label">Font Family:</span>
+                    <span class="font-value">var(--font-primary) / Noto Serif</span>
+                </p>
+                <p class="font-info-item">
+                    <span class="font-label">Title Font Size:</span>
+                    <span class="font-value">var(--font-md) / 18px</span>
+                </p>
+                <p class="font-info-item">
+                    <span class="font-label">Content Font Size:</span>
+                    <span class="font-value">var(--font-sm) / 14px</span>
+                </p>
+            </div>
+        </div>
+
+        <div class="component-grid">
+            <!-- Dark Card with Secondary Button -->
+            <div class="card-example">
+                <h3 class="card-title">Dark Card</h3>
+                <p class="card-content">This is an example of a card component using the Dark Color as background and Secondary Color for text.</p>
+                <button class="btn btn-secondary">View Details</button>
+            </div>
+
+            <!-- Light Card with Primary Button -->
+            <div class="card-example card-light">
+                <h3 class="card-title">Light Card</h3>
+                <p class="card-content">This is an example of a card component using the Light Color as background and Dark Color for text.</p>
+                <button class="btn btn-primary">Get Started</button>
+            </div>
+
+            <!-- Success Card with Icon Button -->
+            <div class="card-example card-success">
+                <h3 class="card-title">Success Card</h3>
+                <p class="card-content">This is an example of a card component using the Success Color as background and Light Color for text.</p>
+                <button class="btn btn-icon btn-light">
+                    <img src="image2024/demo-icon.svg" alt="Demo Icon" class="btn-icon-img">
+                    <span>Start Now</span>
+                </button>
+            </div>
+
+            <!-- Secondary Card with Text Button -->
+            <div class="card-example card-secondary">
+                <h3 class="card-title">Secondary Card</h3>
+                <p class="card-content">This is an example of a card component using the Secondary Color as background and Dark Color for text.</p>
+                <button class="btn btn-text">Learn More</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="font-system" class="style-guide-section">
+        <h2 class="style-guide-title">Font System</h2>
+        
+        <!-- 字型說明 -->
+        <div class="font-example">
+            <div class="font-family-info">
+                <p class="font-info-item">
+                    <span class="font-label">Primary Font:</span>
+                    <span class="font-value">Noto Serif</span>
+                </p>
+                <p class="font-info-item">
+                    <span class="font-label">Weights:</span>
+                    <span class="font-value">Regular (400), Bold (700)</span>
+                </p>
+                <p class="font-info-item">
+                    <span class="font-label">Usage:</span>
+                    <span class="font-value">All headings, body text, and UI elements</span>
+                </p>
+            </div>
+        </div>
+
+        <!-- 標題層級展示 -->
+        <div class="font-example">
+            <h1 class="font-demo-h1">H1: Main Title (2.5rem/40px)</h1>
+            <h2 class="font-demo-h2">H2: Section Title (2rem/32px)</h2>
+            <h3 class="font-demo-h3">H3: Sub Section (1.5rem/24px)</h3>
+            <h4 class="font-demo-h4">H4: Group Title (1.25rem/20px)</h4>
+            <h5 class="font-demo-h5">H5: Small Title (1.1rem/17.6px)</h5>
+            <h6 class="font-demo-h6">H6: Mini Title (1rem/16px)</h6>
+        </div>
+
+        <!-- 文字間距展示 -->
+        <div class="font-example">
+            <div class="font-name">Text Spacing Examples</div>
+            <div class="spacing-demo">
+                <h2 class="demo-heading">Section Title</h2>
+                <h3 class="demo-subheading">Sub Heading with Proper Spacing</h3>
+                <p class="demo-paragraph">This example shows the ideal spacing between headings and paragraphs. Notice how the space between the heading and subheading (1.5rem) differs from the space between the subheading and paragraph (1rem).</p>
+                <p class="demo-paragraph">Multiple paragraphs maintain consistent spacing (1rem) while preserving readability. The line height of 1.5 provides comfortable reading rhythm.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="typography-examples" class="style-guide-section">
+        <h2 class="style-guide-title">Typography Examples</h2>
+        
+        <!-- 文章排版示例 -->
+        <div class="article-demo">
+            <h3 class="style-guide-subtitle">Article Layout Example</h3>
+            
+            <article class="demo-article">
+
+                <!-- Section with Card -->
+                <div class="article-section">
+                    <h1 class="hero-title">Your Learning Journey</h1>
+                    <h2 class="text-heading">Latest Achievement</h2>
+                    <p class="text-body">
+                        Congratulations on reaching a new milestone in your learning journey! Your dedication to improving your language skills has led to significant progress.
+                    </p>
+                    <!-- 使用深色卡片展示成就，添加更多文字層級 -->
+                    <div class="card-example" style="margin: var(--spacing-md) 0;">
+                                            
+                        <div class="card-section">
+                            <h4 class="text-subheading">Recent Milestones</h4>
+                            <p class="card-content">Key achievements in your reading journey:</p>
+                            <div class="milestone-item">
+                                <h5 class="milestone-title">Advanced Article Analysis</h5>
+                                <p class="milestone-desc">Demonstrated excellent critical thinking in academic text analysis.</p>
+                            </div>
+                            <div class="milestone-item">
+                                <h5 class="milestone-title">Vocabulary Enhancement</h5>
+                                <p class="milestone-desc">Mastered 50 new academic vocabulary items this month.</p>
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-secondary">View Details</button>
+                    </div>
+                </div>
+
+                <!-- 長文章段落 -->
+                <div class="article-section">
+                    <h2 class="text-heading">Monthly Progress Review</h2>
+                    <p class="text-body long-text">
+                        This month has shown remarkable improvement in your language abilities. Your consistent practice and dedication to daily exercises have contributed to a solid foundation in all four key skills. The systematic approach you've taken to tackle challenging content has particularly enhanced your comprehension abilities.
+                    </p>
+                    <p class="text-body long-text">
+                        The data shows significant progress in your reading speed and accuracy. You've managed to increase your reading comprehension rate by 15% while maintaining high accuracy in comprehension exercises. This balanced improvement demonstrates effective learning strategies.
+                    </p>
+                </div>
+
+                <!-- 圖文配對區塊 -->
+                <div class="article-section with-cards">
+                    <h2 class="text-heading">Skill Breakdown</h2>
+                    <div class="skill-cards-grid">
+                        <!-- 使用淺色卡片展示閱讀技能 -->
+                        <div class="card-example card-light">
+                            <h1 class="card-title">Reading</h3>
+                            <p class="card-content">Advanced level achieved with consistent performance in comprehension tasks.</p>
+                            <button class="btn btn-primary">View Progress</button>
+                        </div>
+                        <!-- 使用成功色卡片展示寫作技能 -->
+                        <div class="card-example card-success">
+                            <h1 class="card-title">Writing</h3>
+                            <p class="card-content">Significant improvement in essay structure and vocabulary usage.</p>
+                            <button class="btn btn-light">Check Feedback</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 短文配圖示例 -->
+                <div class="article-section">
+                    <h3 class="text-subheading">Quick Tips</h3>
+                    <div class="tips-container">
+                        <p class="text-body short-text">
+                            Remember to practice regularly and focus on areas where you need improvement.
+                        </p>
+                        <!-- 使用次要色卡片作為提示框 -->
+                        <div class="card-example card-secondary" style="margin-top: var(--spacing-sm);">
+                            <h3 class="card-title">Daily Practice Reminder</h3>
+                            <p class="card-content">Set aside 30 minutes each day for focused practice.</p>
+                            <button class="btn btn-text">Set Reminder</button>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </div>
+</body>
+</html> 

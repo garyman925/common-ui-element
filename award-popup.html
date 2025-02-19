@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>獎勵影片</title>
+    <style>
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: transparent;
+        }
+
+        .video-popup-container .video-popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 1;  /* 初始狀態設為完全不透明 */
+        }
+
+        .video-popup-container .video-container {
+            position: relative;
+            width: 600px;
+            background: #000;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .video-popup-container .video-container video {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        /* 隱藏控制器 - 分開寫 */
+        .video-popup-container .video-container video::-webkit-media-controls {
+            display: none !important;
+        }
+
+        .video-popup-container .video-container video::-webkit-media-controls-enclosure {
+            display: none !important;
+        }
+
+        /* 支援其他瀏覽器 */
+        .video-popup-container .video-container video::-webkit-media-controls-panel {
+            display: none !important;
+        }
+
+        .video-popup-container .video-container video::-webkit-media-controls-play-button {
+            display: none !important;
+        }
+
+        .video-popup-container .video-container video::-webkit-media-controls-start-playback-button {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="video-popup-container">
+        <div class="video-popup">
+                <div class="video-container">
+                    <video id="popupVideo" width="1000" autoplay muted playsinline>
+                    <source src="mov/L1.webm" type="video/webm">
+                    您的瀏覽器不支持 HTML5 影片。
+                </video>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const video = document.getElementById('popupVideo');
+        const popup = document.querySelector('.video-popup');
+
+        // 直接設置影片初始狀態
+        video.muted = true;
+        
+        // 立即嘗試播放
+        function playVideo() {
+            try {
+                let playPromise = video.play();
+                
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        console.log("播放成功");
+                        video.muted = false;  // 直接取消靜音
+                    }).catch(error => {
+                        console.log("播放失敗:", error);
+                        // 如果失敗，稍後重試
+                        setTimeout(playVideo, 100);
+                    });
+                }
+            } catch (err) {
+                console.log("播放錯誤:", err);
+                // 如果出錯，稍後重試
+                setTimeout(playVideo, 100);
+            }
+        }
+
+        // 立即執行播放
+        playVideo();
+
+        // 如果影片已經加載完成，確保播放
+        video.addEventListener('loadedmetadata', playVideo);
+
+        // 影片播放完畢後自動關閉視窗
+        video.addEventListener('ended', function() {
+            const container = document.querySelector('.video-popup-container');
+            // 先淡出效果
+            container.style.transition = 'opacity 0.5s ease';
+            container.style.opacity = '0';
+            
+            // 等待淡出動畫完成後關閉視窗
+            setTimeout(() => {
+                window.close();
+            }, 500);
+        });
+
+        // 點擊背景關閉視窗
+        popup.addEventListener('click', function(e) {
+            if (e.target === popup) {
+                const container = document.querySelector('.video-popup-container');
+                container.style.transition = 'opacity 0.5s ease';
+                container.style.opacity = '0';
+                
+                setTimeout(() => {
+                    window.close();
+                }, 500);
+            }
+        });
+
+        // ESC 鍵關閉視窗
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const container = document.querySelector('.video-popup-container');
+                container.style.transition = 'opacity 0.5s ease';
+                container.style.opacity = '0';
+                
+                setTimeout(() => {
+                    window.close();
+                }, 500);
+            }
+        });
+    </script>
+</body>
+</html> 
