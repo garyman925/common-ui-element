@@ -659,7 +659,7 @@
 
         /* 新增文章相關樣式 */
         .article-section {
-            margin: var(--spacing-xl) 0;
+            margin: var(--spacing-md) 0;
         }
 
         .skill-cards-grid {
@@ -695,7 +695,7 @@
         .achievement-list {
             list-style: none;
             padding: 0;
-            margin: var(--spacing-sm) 0;
+            margin: var(--spacing-xs) 0 var(--spacing-sm);
         }
 
         .achievement-list li {
@@ -801,6 +801,164 @@
             font-size: var(--font-lg);
             color: var(--dark-color);
             margin: 0;
+        }
+
+        .course-overview {
+            max-width: 1200px;
+            margin: 0 auto;
+            font-family: var(--font-primary); /* 設置基本字體 */
+        }
+
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+            margin: var(--spacing-xl) 0;
+        }
+
+        .course-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: var(--border-radius);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .featured-course {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-lg);
+            background: var(--secondary-color);
+            padding: var(--spacing-lg);
+            border-radius: var(--border-radius);
+            align-items: center;
+        }
+
+        .featured-course .course-image {
+            height: 300px;
+            margin-bottom: 0;
+        }
+
+        .course-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: var(--spacing-md);
+            margin: var(--spacing-md) 0;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: var(--spacing-sm);
+            background: var(--light-color);
+            border-radius: var(--border-radius);
+        }
+
+        .stat-number {
+            font-family: var(--font-primary);
+            font-size: var(--font-lg);
+            font-weight: bold;
+            color: var(--color-success);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .course-tags {
+            display: flex;
+            gap: var(--spacing-xs);
+            flex-wrap: wrap;
+            margin: var(--spacing-sm) 0;
+        }
+
+        .course-tag {
+            font-family: var(--font-primary);
+            font-size: var(--font-sm);
+            background: var(--tertiary-color);
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--border-radius);
+        }
+
+        /* 更新標題的 margin */
+        .course-overview h1 {
+            margin-bottom: var(--spacing-md); /* 從預設改為 md (20px) */
+        }
+
+        .course-overview h2 {
+            margin-bottom: var(--spacing-sm); /* 從預設改為 sm (15px) */
+        }
+
+        .course-overview h3 {
+            margin: var(--spacing-sm) 0 var(--spacing-sm); /* 上 md, 下 sm */
+        }
+
+        .course-overview h4 {
+            margin: var(--spacing-sm) 0 var(--spacing-xs); /* 上 sm, 下 xs */
+        }
+
+        .course-overview h5 {
+            margin: var(--spacing-sm) 0 var(--spacing-xs); /* 上 sm, 下 xs */
+        }
+
+        .course-overview h6 {
+            margin: var(--spacing-xs) 0; /* 上下都是 xs */
+        }
+
+        /* 調整 featured course 內的標題間距 */
+        .featured-course h2 {
+            margin-bottom: var(--spacing-xs); /* 特別縮小 featured course 中標題的下間距 */
+        }
+
+        /* 調整卡片內的標題間距 */
+        .card-example h4 {
+            margin: var(--spacing-xs) 0; /* 減少卡片內標題的間距 */
+        }
+
+        /* 更新卡片內容字體 */
+        .card-content {
+            font-family: var(--font-primary);
+            line-height: 1.5;
+        }
+
+        /* 更新統計數字和標籤字體 */
+        .stat-number {
+            font-family: var(--font-primary);
+            font-size: var(--font-lg);
+            font-weight: bold;
+            color: var(--color-success);
+        }
+
+        /* 更新按鈕字體 */
+        .course-overview .btn {
+            font-family: var(--font-primary);
+        }
+
+        /* 更新列表字體 */
+        .achievement-list {
+            font-family: var(--font-primary);
+        }
+
+        /* 確保所有文字段落使用正確字體 */
+        .course-overview p {
+            font-family: var(--font-primary);
+        }
+
+        /* 更新所有標題字體 */
+        .course-overview h1,
+        .course-overview h2,
+        .course-overview h3,
+        .course-overview h4,
+        .course-overview h5,
+        .course-overview h6 {
+            font-family: var(--font-primary);
+        }
+
+        /* 更新卡片標題字體 */
+        .card-example .card-title {
+            font-family: var(--font-primary);
+        }
+
+        /* 更新統計項目標題字體 */
+        .stat-item h6 {
+            font-family: var(--font-primary);
         }
     </style>
 </head>
@@ -1222,6 +1380,100 @@
                     </div>
                 </div>
             </article>
+        </div>
+    </div>
+
+    <!-- 在 typography-examples section 之後添加新的 section -->
+    <div id="page-layout-example" class="style-guide-section">
+        <h2 class="style-guide-title">Page Layout Example</h2>
+
+        <div class="course-overview">
+            <h1>DSE Exam Preparation Courses</h1>
+            <p class="text-body">Explore our carefully designed DSE preparation courses to help you achieve excellence in your examinations.</p>
+
+            <!-- Featured Course -->
+            <div class="featured-course">
+                <div class="featured-content">
+                    <h2>Featured Course: DSE English Intensive Program</h2>
+                    <p class="text-body">A comprehensive English enhancement course designed specifically for DSE candidates, covering all four language skills.</p>
+                    
+                    <div class="course-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">95%</div>
+                            <h6>Student Progress Rate</h6>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">5000+</div>
+                            <h6>Active Students</h6>
+                        </div>
+                    </div>
+
+                    <div class="course-tags">
+                        <span class="course-tag">Writing</span>
+                        <span class="course-tag">Speaking</span>
+                        <span class="course-tag">Listening</span>
+                    </div>
+
+                    <button class="btn btn-primary">Learn More</button>
+                </div>
+                <img src="image2024/course-featured.jpg" alt="English Intensive Program" class="course-image">
+            </div>
+
+            <!-- Course Grid -->
+            <h3>Popular Courses</h3>
+            <div class="course-grid">
+                <!-- Course Card 1 -->
+                <div class="card-example card-light">
+                    <img src="image2024/reading-card.png" alt="Reading Comprehension" class="course-image">
+                    <h4>Reading Mastery Course</h4>
+                    <p class="card-content">Master reading techniques and enhance comprehension skills.</p>
+                    <div class="course-tags">
+                        <span class="course-tag">Reading Skills</span>
+                        <span class="course-tag">Vocabulary</span>
+                    </div>
+                    <button class="btn btn-secondary">View Details</button>
+                </div>
+
+                <!-- Course Card 2 -->
+                <div class="card-example card-light">
+                    <img src="image2024/reading-card.png" alt="Writing Training" class="course-image">
+                    <h3>Advanced Writing Workshop</h3>
+                    <p class="card-content">Systematic writing training to develop your unique style.</p>
+                    <div class="course-tags">
+                        <span class="course-tag">Writing Skills</span>
+                        <span class="course-tag">Essay Structure</span>
+                    </div>
+                    <button class="btn btn-secondary">View Details</button>
+                </div>
+
+                <!-- Course Card 3 -->
+                <div class="card-example card-light">
+                    <img src="image2024/reading-card.png" alt="Speaking Practice" class="course-image">
+                    <h4>DSE Speaking Intensive</h4>
+                    <p class="card-content">Targeted speaking practice to boost your confidence.</p>
+                    <div class="course-tags">
+                        <span class="course-tag">Speaking Skills</span>
+                        <span class="course-tag">Group Discussion</span>
+                    </div>
+                    <button class="btn btn-secondary">View Details</button>
+                </div>
+            </div>
+
+            <!-- Additional Information -->
+            <div class="article-section">
+                <h5>Course Features</h5>
+                <ul class="achievement-list">
+                    <li>Small class sizes for personalized attention</li>
+                    <li>Regular mock exams to track progress</li>
+                    <li>Comprehensive learning progress tracking</li>
+                    <li>Flexible class scheduling options</li>
+                </ul>
+
+                <h5>Enrollment Information</h5>
+                <p class="text-body short-text">
+                    Courses are suitable for Form 4-6 students. Choose the appropriate level based on your current proficiency.
+                </p>
+            </div>
         </div>
     </div>
 </body>
