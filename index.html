@@ -3,20 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>詞彙學習統計</title>
+    <link rel="stylesheet" href="schedule-dev.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary-color: #ffd803;
+            --secondary-color: #e3f6f5;
+            --secondary-color-shadow: #cee7e6;
+            --tertiary-color: #bae8e8;
+            --light-color: #fffffe;
+            --dark-color:  #50488d;
+        }
         body {
             margin: 0;
             padding: 0;
-            background-color: #1f1b32;
+            background-color: var(--secondary-color);
             color: white;
-            font-family: Arial, sans-serif;
+            font-family: 'Noto Serif', serif;
         }
 
         .voabs-learning-progress-board {
-            max-width: 1000px;
+            width: 100%;
             margin: 0 auto;
-            padding: 20px;
         }
 
         .voabs-learning-progress-board .learning-progress-container {
@@ -158,7 +166,7 @@
         .voabs-learning-progress-board .score-badge {
             color: #3058A8;
             font-size: .85rem;
-            font-family: sans-serif;
+            font-family: 'Noto Serif', serif;
             font-weight: bold;
             border-radius: 3px;
             background: #ffd811;
@@ -217,129 +225,457 @@
             color: #fff;
             padding: 6px;
         }
+
+        /* 新添加的样式 */
+        .page-container {
+            width: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .top-banner {
+            width: 100%;
+            height: 80px;
+            background-color: #fff;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .banner-text {
+            font-size: 1.6rem;
+            color: #272343;
+            font-weight: bold;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .banner-text .highlight {
+            color: var(--dark-color);
+            font-size: 2.5rem;
+            margin: 0 5px;
+        }
+
+        .start-study-btn {
+            background-color: var(--primary-color);
+            color: #272343;
+            padding: 12px 100px;
+            height: 100%;
+            border: none;
+            font-weight: bold;
+            font-size: 1.6rem;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .start-study-btn img {
+            width: 50px;
+            height: 50px;
+            transition: transform 0.2s ease;
+        }
+
+        .start-study-btn:hover img {
+            transform: translateX(5px);
+        }
+
+        .content-container {
+            display: flex;
+            gap: 20px;
+            width: 100%;
+        }
+
+        .left-column {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .right-column {
+            width: 300px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .square-banner {
+            background-color: #272343;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .square-banner .square-banner-title {
+            font-size: 2rem;
+            color: #272343;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .square-banner.green-banner {
+            background-color: #B2EE16;
+            flex-direction: column;
+            padding: 20px;
+            gap: 0;
+        }
+
+        .square-banner img {
+            width: 60%;
+            height: 60%;
+            object-fit: contain;
+        }
+
+        .square-banner .banner-btn {
+            background-color: var(--dark-color);
+            color: var(--primary-color);
+            padding: 12px 24px;
+            border-radius: 25px;
+            border: none;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .square-banner .banner-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* 添加响应式布局 */
+        @media screen and (max-width: 1024px) {
+            .content-container {
+                flex-direction: column;
+            }
+
+            .right-column {
+                width: 100%;
+                flex-direction: row;
+            }
+
+            .square-banner {
+                width: calc(50% - 10px);
+                max-width: 300px;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .right-column {
+                flex-direction: column;
+            }
+
+            .square-banner {
+                width: 100%;
+                max-width: none;
+            }
+
+            .top-banner {
+                flex-direction: column;
+                height: auto;
+                padding: 20px;
+                gap: 15px;
+            }
+
+            .banner-text {
+                text-align: center;
+            }
+
+            .square-banner img {
+                width: 40%;
+                height: 40%;
+            }
+
+            .square-banner.green-banner {
+                padding: 15px;
+                gap: 15px;
+            }
+        }
+
+        .calendar-banner {
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            gap: 15px;
+            background-color: #272343;
+            color: white;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .calendar-day {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 10px;
+            position: relative;
+        }
+
+        .calendar-day .weekday {
+            font-size: 0.9rem;
+            color: #fff;
+        }
+
+        .calendar-day .date {
+            font-size: 1.1rem;
+            color: #fff;
+        }
+
+        .calendar-day.completed {
+            background: rgba(57, 201, 199, 0.3);
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .calendar-day.completed::after {
+            content: '';
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 15px;
+            height: 15px;
+            background-image: url('image2024/tick-icon.svg');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .calendar-day.active {
+            background: transparent;
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+        }
+
+        .calendar-day.active .weekday,
+        .calendar-day.active .date {
+            color: var(--primary-color);
+        }
+
+        .calendar-banner .main-btn {
+            background-color: var(--primary-color);
+            color: #272343;
+            padding: 15px 20px;
+            border-radius: 50px;
+            border: none;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            text-align: center;
+            margin: 0;
+        }
+
+        .calendar-banner .challenge-text {
+            color: white;
+            text-align: center;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* 修改全局字体 */
+        * {
+            font-family: 'Noto Serif', serif;
+        }
+
+        /* 移除其他样式中的font-family设置 */
+        .banner-text,
+        .start-study-btn,
+        .square-banner-title,
+        .banner-btn,
+        .calendar-day,
+        .main-btn,
+        .challenge-text,
+        .learning-progress-container-title,
+        .score-label,
+        .score-badge,
+        .label-text {
+            font-family: inherit;
+        }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 </head>
 <body>
-    <div class="voabs-learning-progress-board">
+    <div class="page-container">
+        <!-- 顶部banner -->
+        <div class="top-banner">
+            <div class="banner-text">
+                There are <span class="highlight">20</span> cards waiting for you today!
+            </div>
+            <button class="start-study-btn">
+                Start today's study!
+                <img src="image2024/circle-arrow-right.svg" alt="arrow">
+            </button>
+        </div>
         
-        <div class="learning-progress-container">
-		
-            <span class="learning-progress-container-title">
-                You have mastered 420 vocabs,
-                and you are learning 420 vocabs
-            </span>
-            <div class="score-display-container">
-                
-                <div class="score-display-container-item">
-                    <div class="crown-icon"></div>
-                    <div class="score-icon hexagon-icon">
-                        <span>9</span>
-                    </div>
-                    <div class="score-badge">Days</div>
-                    <div class="score-label">
-                            Longest Combo!
+        <!-- 两栏内容区 -->
+        <div class="content-container">
+            <!-- 左侧列 -->
+            <div class="left-column">
+                <div class="voabs-learning-progress-board">
+                    <div class="learning-progress-container">
+                        <span class="learning-progress-container-title">
+                            You have mastered 420 vocabs,
+                            and you are learning 420 vocabs
+                        </span>
+                        <div class="score-display-container">
+                            <div class="score-display-container-item">
+                                <div class="crown-icon"></div>
+                                <div class="score-icon hexagon-icon">
+                                    <span>9</span>
+                                </div>
+                                <div class="score-badge">Days</div>
+                                <div class="score-label">
+                                        Longest Combo!
+                                </div>
+                            </div>
+                            <div class="score-display-container-item">
+                                <div class="stars-group-icon"></div>
+                                <div class="score-icon doughnut-bar" style="--progress: 70%">
+                                    <span>700</span>
+                                </div>
+                                <div class="score-label">
+                                    Mastered Level
+                                </div>
+                            </div>
+                            <div class="score-display-container-item">
+                                <div class="crown-icon"></div>
+                                <div class="score-icon hexagon-icon hexagon-icon-lg">
+                                    <span>7777</span>
+                                </div>
+                                <div class="score-badge">Vocabulary</div>
+                                <div class="score-label">
+                                    in Progress
+                                </div>
+                            </div>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" style="display: flex; overflow: hidden;">
+                                <div style="width: 33%; height: 100%; background-color: #FFF716;"></div>
+                                <div style="width: 33%; height: 100%; background-color: #B2EE16;"></div>
+                                <div style="width: 34%; height: 100%; background-color: #0dcaf0;"></div>
+                                <div style="width: 34%; height: 100%; background-color: #9A11E9;"></div>
+                                <div style="width: 34%; height: 100%; background-color: #4D0058;"></div>
+                            </div>
+                            <div class="progress-labels">
+                                <div class="progress-label">
+                                    <div class="label-bubble" style="background-color: #FFF716;">
+                                       <img src="image2024/icon-bulb-off.svg"  width="20">
+                                       <img src="image2024/icon-bulb-off.svg"  width="20">
+                                       <img src="image2024/icon-bulb-off.svg"  width="20">
+                                       <img src="image2024/icon-bulb-on.svg"   width="20">
+                                       <img src="image2024/icon-bulb-on.svg"   width="20">
+                                    </div>
+                                    <div class="label-text">220 (12%)</div>
+                                </div>
+                                <div class="progress-label">
+                                    <div class="label-bubble" style="background-color: #B2EE16;">
+                                        <img src="image2024/icon-bulb-off.svg"  width="20">
+                                        <img src="image2024/icon-bulb-off.svg"  width="20">
+                                        <img src="image2024/icon-bulb-off.svg"  width="20">
+                                        <img src="image2024/icon-bulb-on.svg"   width="20">
+                                        <img src="image2024/icon-bulb-on.svg"   width="20">
+                                    </div>
+                                    <div class="label-text">220 (12%)</div>
+                                </div>
+                                <div class="progress-label">
+                                    <div class="label-bubble" style="background-color: #0dcaf0;">
+                                        <img src="image2024/icon-bulb-off.svg"  width="20">
+                                        <img src="image2024/icon-bulb-off.svg"  width="20">
+                                        <img src="image2024/icon-bulb-off.svg"  width="20">
+                                        <img src="image2024/icon-bulb-on.svg"   width="20">
+                                        <img src="image2024/icon-bulb-on.svg"   width="20">
+                                    </div>
+                                    <div class="label-text">220 (12%)</div>
+                                </div>
+                                <div class="progress-label">
+                                    <div class="label-bubble" style="background-color: #4AC7FF;">
+                                        <img src="image2024/icon-bulb-off.svg"  width="20">
+                                        <img src="image2024/icon-bulb-off.svg"  width="20">
+                                        <img src="image2024/icon-bulb-off.svg"  width="20">
+                                        <img src="image2024/icon-bulb-on.svg"   width="20">
+                                        <img src="image2024/icon-bulb-on.svg"   width="20">
+                                    </div>
+                                    <div class="label-text">220 (12%)</div>
+                                </div>
+                                <div class="progress-label">
+                                    <div class="label-bubble" style="background-color: #9A11E9;">
+                                        <img src="image2024/icon-bulb-off.svg"  width="20">
+                                        <img src="image2024/icon-bulb-off.svg"  width="20">
+                                        <img src="image2024/icon-bulb-off.svg"  width="20">
+                                        <img src="image2024/icon-bulb-on.svg"   width="20">
+                                        <img src="image2024/icon-bulb-on.svg"   width="20">
+                                    </div>
+                                    <div class="label-text">220 (12%)</div>
+                                </div>
+                                <div class="progress-label">
+                                    <div class="label-bubble" style="background-color: #4D0058;">
+                                        <img src="image2024/icon-bulb-off.svg"  width="20">
+                                        <img src="image2024/icon-bulb-off.svg"  width="20">
+                                        <img src="image2024/icon-bulb-off.svg"  width="20">
+                                        <img src="image2024/icon-bulb-on.svg"   width="20">
+                                        <img src="image2024/icon-bulb-on.svg"   width="20">
+                                    </div>
+                                    <div class="label-text">220 (12%)</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                
-
-                <div class="score-display-container-item">
-                    <div class="stars-group-icon"></div>
-                    <div class="score-icon doughnut-bar" style="--progress: 70%">
-                        <span>700</span>
-                    </div>
-                    <div class="score-label">
-                        Mastered Level
-                    </div>
-                </div>
-
-                <div class="score-display-container-item">
-                    <div class="crown-icon"></div>
-                    <div class="score-icon hexagon-icon hexagon-icon-lg">
-                        <span>7777</span>
-                    </div>
-                    <div class="score-badge">Vocabulary</div>
-                    <div class="score-label">
-                        in Progress
-                    </div>
-                </div>
-
             </div>
-
-            <div class="progress-bar-container">
-                <div class="progress-bar" style="display: flex; overflow: hidden;">
-                    <div style="width: 33%; height: 100%; background-color: #FFF716;"></div>
-                    <div style="width: 33%; height: 100%; background-color: #B2EE16;"></div>
-                    <div style="width: 34%; height: 100%; background-color: #0dcaf0;"></div>
-                    <div style="width: 34%; height: 100%; background-color: #9A11E9;"></div>
-                    <div style="width: 34%; height: 100%; background-color: #4D0058;"></div>
+            
+            <!-- 右侧列 -->
+            <div class="right-column">
+                <div class="square-banner calendar-banner">
+                    <div class="calendar-header">
+                        <div class="calendar-day">
+                            <span class="weekday">S</span>
+                            <span class="date"></span>
+                        </div>
+                        <div class="calendar-day">
+                            <span class="weekday">M</span>
+                            <span class="date"></span>
+                        </div>
+                        <div class="calendar-day completed">
+                            <span class="weekday">T</span>
+                            <span class="date">5</span>
+                        </div>
+                        <div class="calendar-day completed">
+                            <span class="weekday">W</span>
+                            <span class="date">6</span>
+                        </div>
+                        <div class="calendar-day active">
+                            <span class="weekday">T</span>
+                            <span class="date">7</span>
+                        </div>
+                        <div class="calendar-day">
+                            <span class="weekday">F</span>
+                            <span class="date">8</span>
+                        </div>
+                    </div>
+                    <div class="main-btn">
+                        Come and start your study today now!
+                    </div>
+                    <div class="challenge-text">
+                        Challenge the highest combo number!
+                    </div>
                 </div>
-                <div class="progress-labels">
-                    <div class="progress-label">
-                        <div class="label-bubble" style="background-color: #FFF716;">
-                           <img src="image2024/icon-bulb-off.svg"  width="20">
-                           <img src="image2024/icon-bulb-off.svg"  width="20">
-                           <img src="image2024/icon-bulb-off.svg"  width="20">
-                           <img src="image2024/icon-bulb-on.svg"   width="20">
-                           <img src="image2024/icon-bulb-on.svg"   width="20">
-                        </div>
-                        <div class="label-text">220 (12%)</div>
-                    </div>
-                    <div class="progress-label">
-                        <div class="label-bubble" style="background-color: #B2EE16;">
-                            <img src="image2024/icon-bulb-off.svg"  width="20">
-                            <img src="image2024/icon-bulb-off.svg"  width="20">
-                            <img src="image2024/icon-bulb-off.svg"  width="20">
-                            <img src="image2024/icon-bulb-on.svg"   width="20">
-                            <img src="image2024/icon-bulb-on.svg"   width="20">
-                        </div>
-                        <div class="label-text">220 (12%)</div>
-                    </div>
-                    <div class="progress-label">
-                        <div class="label-bubble" style="background-color: #0dcaf0;">
-                            <img src="image2024/icon-bulb-off.svg"  width="20">
-                            <img src="image2024/icon-bulb-off.svg"  width="20">
-                            <img src="image2024/icon-bulb-off.svg"  width="20">
-                            <img src="image2024/icon-bulb-on.svg"   width="20">
-                            <img src="image2024/icon-bulb-on.svg"   width="20">
-                        </div>
-                        <div class="label-text">220 (12%)</div>
-                    </div>
-                    <div class="progress-label">
-                        <div class="label-bubble" style="background-color: #4AC7FF;">
-                            <img src="image2024/icon-bulb-off.svg"  width="20">
-                            <img src="image2024/icon-bulb-off.svg"  width="20">
-                            <img src="image2024/icon-bulb-off.svg"  width="20">
-                            <img src="image2024/icon-bulb-on.svg"   width="20">
-                            <img src="image2024/icon-bulb-on.svg"   width="20">
-                        </div>
-                        <div class="label-text">220 (12%)</div>
-                    </div>
-                    <div class="progress-label">
-                        <div class="label-bubble" style="background-color: #9A11E9;">
-                            <img src="image2024/icon-bulb-off.svg"  width="20">
-                            <img src="image2024/icon-bulb-off.svg"  width="20">
-                            <img src="image2024/icon-bulb-off.svg"  width="20">
-                            <img src="image2024/icon-bulb-on.svg"   width="20">
-                            <img src="image2024/icon-bulb-on.svg"   width="20">
-                        </div>
-                        <div class="label-text">220 (12%)</div>
-                    </div>
-                    <div class="progress-label">
-                        <div class="label-bubble" style="background-color: #4D0058;">
-                            <img src="image2024/icon-bulb-off.svg"  width="20">
-                            <img src="image2024/icon-bulb-off.svg"  width="20">
-                            <img src="image2024/icon-bulb-off.svg"  width="20">
-                            <img src="image2024/icon-bulb-on.svg"   width="20">
-                            <img src="image2024/icon-bulb-on.svg"   width="20">
-                        </div>
-                        <div class="label-text">220 (12%)</div>
-                    </div>
+                <div class="square-banner green-banner">
+                <h3 class="square-banner-title">Vocabs</h3>
+                    <img src="image2024/books.png" alt="Books">
+                    <button class="banner-btn">View All Books</button>
                 </div>
             </div>
-
-	    </div>
-
+        </div>
     </div>
     <script>
     document.addEventListener('DOMContentLoaded', function() {

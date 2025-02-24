@@ -53,7 +53,6 @@
             max-width: 1200px;
             display: flex;
             flex-direction: column;
-            gap: 40px;
             padding: 0 20px;
         }
 
@@ -61,7 +60,6 @@
             width: 100%;
             display: grid;
             grid-template-rows: repeat(4, auto);
-            padding: 20px 30px;
         }
 
         .badge-row {
@@ -101,12 +99,22 @@
             align-items: center;
             justify-content: start;
             color: white;
+            gap: 10px;
         }
 
         .level-text {
             font-size: 1.6rem;
             font-weight: bold;
             font-family: 'Noto Serif', serif;
+        }
+
+        .exp-values {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .exp-current {
+            color: var(--primary-color);
         }
 
         .level-number {
@@ -123,7 +131,7 @@
             align-items: center;
             gap: 10px;
             background: transparent;
-            height: 20px;
+            height: 35px;
             margin-bottom: 20px;    
         }
 
@@ -142,13 +150,12 @@
         }
 
         .target-badge {
-            width: 120px;
+            width:  200px;
             height: 120px;
-            background-image: url('image2024/badge-mini.png');
+            background-image: url('image2024/badge-unknown.png');
             background-size: contain;
             background-position: center;
             background-repeat: no-repeat;
-            filter: brightness(0);
             flex-shrink: 0;
         }
 
@@ -326,11 +333,6 @@
             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
         }
 
-        .badge-small-frame.reading::before { background-image: url('image2024/reading-card-frame-title.png'); }
-        .badge-small-frame.writing::before { background-image: url('image2024/writing-card-frame-title.png'); }
-        .badge-small-frame.speaking::before { background-image: url('image2024/speaking-card-frame-title.png'); }
-        .badge-small-frame.listening::before { background-image: url('image2024/listening-card-frame-title.png'); }
-
         .badge-small-frame:hover {
             transform: scale(1.1);
         }
@@ -353,24 +355,240 @@
             }
         }
 
+        @media screen and (max-width: 900px) {
+            .progress-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .badge-heading {
+                width: 100%;
+                height: 100px;
+            }
+
+            .progress-section {
+                width: 100%;
+            }
+
+            .progress-container {
+                flex-direction: row;
+                height: 35px;
+                align-items: center;
+                gap: 20px;
+            }
+
+            .progress-wrapper {
+                flex: 1;
+                height: 100%;
+            }
+
+            .target-badge {
+                width: 150px;
+                height: 90px;
+                margin: 0;
+            }
+
+            .level-number {
+                font-size: 4rem;
+                transform: translateY(-10px);
+            }
+        }
+
         @media screen and (max-width: 768px) {
             .badge-cards {
                 grid-template-columns: repeat(4, 1fr);
+                gap: 10px;
             }
 
             .badge-small-frame {
-                height: 140px;
+                height: 100px;
+            }
+
+            .badge-name {
+                font-size: 0.7rem;
+            }
+
+            .exp-values {
+                font-size: 1rem;
+            }
+
+            .level-text {
+                font-size: 1.4rem;
             }
         }
 
         @media screen and (max-width: 480px) {
-            .badge-row {
-                grid-template-columns: repeat(3, 1fr);
+            .progress-container {
+                flex-direction: column;
+                height: auto;
+                gap: 15px;
             }
 
-            .badge-small-frame {
-                height: 120px;
+            .target-badge {
+                margin: 0 auto;
             }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .level-number {
+                font-size: 3rem;
+            }
+        }
+
+        .badge-small-frame {
+            position: relative;
+        }
+
+        .badge-name {
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 0.8rem;
+            text-align: center;
+            width: 90%;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+        }
+
+        .badge-small-frame.current {
+            position: relative;
+            border: 2px solid var(--primary-color);
+            animation: pulse 2s infinite;
+            transform: scale(1.2);
+            z-index: 2;
+        }
+
+        .badge-small-frame.current::before {
+            content: 'You are here';
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--primary-color);
+            color: #fff;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 216, 3, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(255, 216, 3, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 216, 3, 0);
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .badge-small-frame.current::before {
+                font-size: 0.7rem;
+                top: -22px;
+                padding: 2px 8px;
+            }
+        }
+
+        .badge-small-frame:hover {
+            transform: scale(1.1);
+        }
+
+        .badge-small-frame.current:hover {
+            transform: scale(1.2);
+        }
+
+        .badge-small-frame.current .badge-name {
+            bottom: 0;
+        }
+
+        .video-popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.45);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            padding: 0;
+        }
+
+        .video-popup-content {
+            position: relative;
+            width: 90%;
+            max-width: 650px;
+            background: transparent;
+            padding: 0;
+            border-radius: 15px;
+        }
+
+        .video-popup video {
+            width: 100%;
+            border-radius: 10px;
+            display: block;
+        }
+
+        .video-close-button {
+            position: absolute;
+            top: -15px;
+            right: -15px;
+            width: 30px;
+            height: 30px;
+            background-color: var(--primary-color);
+            border: none;
+            color: #fff;
+            font-size: 2.6rem;
+            cursor: pointer;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease;
+        }
+
+        .video-close-button:hover {
+            transform: scale(1.1);
+        }
+
+        @media screen and (max-width: 768px) {
+            .video-popup {
+                padding: 0;
+            }
+
+            .video-popup-content {
+                width: 95%;
+                padding: 15px;
+            }
+        }
+
+        .video-badge-title {
+            color: #fff;
+            text-align: center;
+            margin: 0;
+            font-size: 3rem;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        @media screen and (max-width: 768px) {
+            .video-badge-title {
+                font-size: 1.2rem;
+                margin-bottom: 10px;
+            }
+        }
+
+        .badge-mini.unlocked {
+            cursor: pointer;
         }
     </style>
 </head>
@@ -390,6 +608,9 @@
                             <div class="progress-section">
                                 <div class="level-info">
                                     <span class="level-text">Exp.</span>
+                                    <span class="exp-values">
+                                        <span class="exp-current">2,450</span> / 3,000
+                                    </span>
                                 </div>
                                 <div class="progress-container">
                                     <div class="progress-wrapper">
@@ -401,7 +622,7 @@
                                     <div class="badge-small-frame reading">
                                         <div class="badge-mini unlocked"></div>
                                     </div>
-                                    <div class="badge-small-frame reading">
+                                    <div class="badge-small-frame reading current">
                                         <div class="badge-mini unlocked"></div>
                                     </div>
                                     <div class="badge-small-frame reading">
@@ -435,6 +656,9 @@
                             <div class="progress-section">
                                 <div class="level-info">
                                     <span class="level-text">Exp.</span>
+                                    <span class="exp-values">
+                                        <span class="exp-current">1,200</span> / 1,500
+                                    </span>
                                 </div>
                                 <div class="progress-container">
                                     <div class="progress-wrapper">
@@ -446,7 +670,7 @@
                                     <div class="badge-small-frame speaking">
                                         <div class="badge-mini unlocked"></div>
                                     </div>
-                                    <div class="badge-small-frame speaking">
+                                    <div class="badge-small-frame speaking current">
                                         <div class="badge-mini unlocked"></div>
                                     </div>
                                     <div class="badge-small-frame speaking">
@@ -480,6 +704,9 @@
                             <div class="progress-section">
                                 <div class="level-info">
                                     <span class="level-text">Exp.</span>
+                                    <span class="exp-values">
+                                        <span class="exp-current">1,000</span> / 1,200
+                                    </span>
                                 </div>
                                 <div class="progress-container">
                                     <div class="progress-wrapper">
@@ -491,7 +718,7 @@
                                     <div class="badge-small-frame writing">
                                         <div class="badge-mini unlocked"></div>
                                     </div>
-                                    <div class="badge-small-frame writing">
+                                    <div class="badge-small-frame writing current">
                                         <div class="badge-mini unlocked"></div>
                                     </div>
                                     <div class="badge-small-frame writing">
@@ -525,6 +752,9 @@
                             <div class="progress-section">
                                 <div class="level-info">
                                     <span class="level-text">Exp.</span>
+                                    <span class="exp-values">
+                                        <span class="exp-current">800</span> / 1,000
+                                    </span>
                                 </div>
                                 <div class="progress-container">
                                     <div class="progress-wrapper">
@@ -536,7 +766,7 @@
                                     <div class="badge-small-frame listening">
                                         <div class="badge-mini unlocked"></div>
                                     </div>
-                                    <div class="badge-small-frame listening">
+                                    <div class="badge-small-frame listening current">
                                         <div class="badge-mini unlocked"></div>
                                     </div>
                                     <div class="badge-small-frame listening">
@@ -563,28 +793,106 @@
                     </div>
                 </div>
 
-                <!-- <div class="achievements-container">
-                    <div class="badge-achievement-item reading-card">
-                        <div class="badge-achievement-title reading-title"></div>
-                    </div>
-                    <div class="badge-achievement-item speaking-card">
-                        <div class="badge-achievement-title speaking-title"></div>
-                    </div>
-                    <div class="badge-achievement-item writing-card">
-                        <div class="badge-achievement-title writing-title"></div>
-                    </div>
-                    <div class="badge-achievement-item listening-card">
-                        <div class="badge-achievement-title listening-title"></div>
-                    </div>
-                </div> -->
-
             </div>
         </div>
     </div>
 
+    <!-- 修改视频弹窗HTML结构 -->
+    <div class="video-popup" style="display: none;">
+        <div class="video-popup-content">
+            <button class="video-close-button" onclick="closeVideoPopup()">×</button>
+            <h2 class="video-badge-title"></h2>
+            <video id="badge-video" controls>
+                <source src="mov/demo-badge-video.webm" type="video/webm">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+    </div>
+
     <script>
+
+        // 讀取badge-names.json, 可以用其他方法展示
+        async function loadBadgeNames() {
+            try {
+                const response = await fetch('badge-names.json');
+                const data = await response.json();
+                
+                // 为每个类别添加badge名称
+                ['reading', 'writing', 'speaking', 'listening'].forEach(category => {
+                    const badges = document.querySelectorAll(`.badge-small-frame.${category} .badge-mini.unlocked`);
+                    badges.forEach((badge, index) => {
+                        const badgeFrame = badge.parentElement;
+                        const badgeName = data[category].badges[index].name;
+                        
+                        // 创建名称元素
+                        const nameElement = document.createElement('div');
+                        nameElement.className = 'badge-name';
+                        nameElement.textContent = badgeName;
+                        
+                        // 添加到badge frame中
+                        badgeFrame.appendChild(nameElement);
+                    });
+                });
+            } catch (error) {
+                console.error('Error loading badge names:', error);
+            }
+        }
+
+        // 页面加载时执行
+        document.addEventListener('DOMContentLoaded', function() {
+            loadBadgeNames();
+
+            // 为所有已解锁的badge添加点击事件
+            const unlockedBadges = document.querySelectorAll('.badge-mini.unlocked');
+            unlockedBadges.forEach(badge => {
+                badge.addEventListener('click', playBadgeVideo);
+            });
+        });
+
         function closeBadgePopup() {
             document.querySelector('.badge-popup-overlay').style.display = 'none';
         }
+
+        function playBadgeVideo(event) {
+            const videoPopup = document.querySelector('.video-popup');
+            const video = document.getElementById('badge-video');
+            const badgeFrame = event.target.closest('.badge-small-frame');
+            const badgeName = badgeFrame.querySelector('.badge-name').textContent;
+            
+            // 设置标题
+            document.querySelector('.video-badge-title').textContent = badgeName;
+            
+            videoPopup.style.display = 'flex';
+            video.play();
+
+            // 阻止事件冒泡
+            event.stopPropagation();
+        }
+
+        function closeVideoPopup() {
+            const videoPopup = document.querySelector('.video-popup');
+            const video = document.getElementById('badge-video');
+            
+            video.pause();
+            video.currentTime = 0;
+            videoPopup.style.display = 'none';
+            
+            // 清除标题
+            document.querySelector('.video-badge-title').textContent = '';
+            
+            // 移除视频源，立即停止加载
+            video.src = '';
+            // 重新设置视频源
+            setTimeout(() => {
+                video.src = 'mov/demo-badge-video.webm';
+            }, 100);
+        }
+
+        // 点击视频弹窗背景时关闭
+        document.querySelector('.video-popup').addEventListener('click', function(event) {
+            if (event.target === this) {
+                closeVideoPopup();
+            }
+        });
     </script>
 </body>

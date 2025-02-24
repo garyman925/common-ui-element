@@ -302,39 +302,13 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-        }
-
-        .streak-icon {
-            width: 120px;
-            height: 120px;
-            margin: 1rem auto;
-        }
-
-        @keyframes calendar-pop {
-            0% {
-                transform: scale(0.5);
-                opacity: 0;
-            }
-            50% {
-                transform: scale(1.1);
-            }
-            100% {
-                transform: scale(1);
-                opacity: 1;
-            }
+            line-height: 1;
+            padding: 13px 0px;
         }
 
         .streak-text {
-            color: var(--dark-color);
-            font-size: 1.2rem;
-            opacity: 0;
-            margin: 0;
-        }
-
-        .bonus-text {
-            color: var(--primary-color);
-            font-weight: bold;
-            font-size: 1.1rem;
+            color: #9d5fdf;
+            font-size: 1.4rem;
             opacity: 0;
             margin: 0;
         }
@@ -417,15 +391,11 @@
         </div>
         <div class="daily-login-container">
             <h2 class="reward-title">Daily Login</h2>
-            <video class="streak-icon" autoplay loop muted playsinline>
-                <source src="image2024/calendar-animation.webm" type="video/webm">
-            </video>
             <div class="streak-number">
                 <span id="streakNum">0</span>
                 <span style="font-size: 2rem;">Days</span>
             </div>
             <p class="streak-text">Keep up the momentum!</p>
-            <p class="bonus-text">+50% bonus points tomorrow</p>
         </div>
         <button class="next-btn">Next</button>
     </div>
@@ -436,7 +406,8 @@
         <button class="demo-btn" onclick="dailyLogin()">Daily Login</button>
         <button class="demo-btn" onclick="newBadgeAnimation()">New Badge</button>
         <button class="demo-btn" onclick="demoCustom()">Custom Demo</button>
-        <button class="demo-btn" onclick="">Test Get New Badge</button>
+        <button class="demo-btn" onclick="testGetNewBadge()">Test Get New Badge</button>
+        <button class="demo-btn" onclick="getMedalPoint()">Get Medal Point</button>
     </div>
 
     <script>
@@ -458,7 +429,22 @@
                         scale: 1,
                         duration: 0.5,
                         ease: "back.out(1.7)",
-                        onComplete: onComplete
+                        onComplete: () => {
+                            // 1秒后自动触发下一个动画
+                            setTimeout(() => {
+                                // 淡出当前动画
+                                gsap.to(container.querySelector('.first-animation'), {
+                                    opacity: 0,
+                                    duration: 0.3,
+                                    onComplete: () => {
+                                        if (onComplete) onComplete();
+                                        // 直接增加 currentIndex 并调用 playNext
+                                        currentIndex++;
+                                        playNext();
+                                    }
+                                });
+                            }, 1000);
+                        }
                     });
                 }
             },
@@ -488,6 +474,7 @@
                     const tl = gsap.timeline();
                     const message = container.querySelector('.message');
 
+                    // 第一次 confetti 效果
                     confetti({
                         particleCount: 100,
                         spread: 90,
@@ -503,11 +490,20 @@
                         duration: 0.5,
                         ease: "back.out(1.7)"
                     }).to("#medalPointNum", {
-                        duration: 1.5,
+                        duration: 1,
                         textContent: data.medalPoint,
                         snap: { textContent: 1 },
                         ease: "power1.out",
                         onComplete: () => {
+                            // 第二次 confetti 效果，在數字動畫完成後
+                            confetti({
+                                particleCount: 150,
+                                spread: 120,
+                                origin: { y: 0.7 },
+                                colors: ['#ffd803', '#bae8e8', '#50488d'],
+                                ticks: 200
+                            });
+                            
                             gsap.to(message, {
                                 opacity: 1,
                                 duration: 0.3,
@@ -653,12 +649,6 @@
                 show: function(container, data, onComplete) {
                     const tl = gsap.timeline();
                     const streakText = container.querySelector('.streak-text');
-                    const bonusText = container.querySelector('.bonus-text');
-                    const video = container.querySelector('video');
-
-                    // 確保視頻重新播放
-                    video.currentTime = 0;
-                    video.play();
 
                     // 播放煙花效果
                     confetti({
@@ -672,20 +662,14 @@
                     tl.to(container, {
                         opacity: 1,
                         duration: 0.3
-                    }).from(video, {
-                        scale: 0,
-                        opacity: 0,
-                        duration: 1,
-                        ease: "back.out(1.7)"
                     }).to("#streakNum", {
-                        duration: 1.5,
+                        duration: 1,
                         textContent: data.streakDays,
                         snap: { textContent: 1 },
                         ease: "power1.out"
-                    }).to([streakText, bonusText], {
+                    }).to(streakText, {
                         opacity: 1,
                         duration: 0.5,
-                        stagger: 0.2,
                         onComplete: onComplete
                     });
                 }
@@ -694,9 +678,10 @@
 
         // 預定義的動畫序列
         const AnimationSequences = {
-            dailyLogin: ['dailyStreak', 'medalPoint', 'badge'],
+            dailyLogin: ['dailyStreak'],
             practiceComplete: ['excellent', 'accuracy', 'medalPoint', 'exp'],
-            newBadgeUnlock: ['exp','badge']
+            newBadgeUnlock: ['exp','badge'],
+            getMedalPoint: ['medalPoint']
         };
 
         // 動畫控制器
@@ -739,28 +724,50 @@
                 resetContainers();
                 currentElement.style.display = 'block';
                 
-                // 更新按鈕文字
-                nextBtn.textContent = currentIndex === sequence.length - 1 ? 'Continue' : 'Next';
-                
-                // 顯示按鈕
-                gsap.to(nextBtn, {
-                    opacity: 1,
-                    duration: 0.3
-                });
+                // 只在非 first-animation 时显示 next 按钮
+                if (sequence[currentIndex] !== 'excellent') {
+                    // 检查是否是序列的最后一个动画
+                    const isLastAnimation = currentIndex === sequence.length - 1;
+                    nextBtn.textContent = isLastAnimation ? 'Review Answer' : 'Next';
+                    
+                    // 根据是否是最后一个动画设置不同的背景颜色
+                    nextBtn.style.backgroundColor = isLastAnimation ? '#bae8e8' : 'var(--primary-color)';
+                    
+                    gsap.to(nextBtn, {
+                        opacity: 1,
+                        duration: 0.3
+                    });
+                } else {
+                    nextBtn.style.opacity = '0';
+                }
 
                 // 播放當前動畫
                 currentModule.show(currentElement, data, () => {
-                    // 設置下一步按鈕點擊事件
-                    nextBtn.onclick = () => {
-                        gsap.to(currentElement, {
-                            opacity: 0,
-                            duration: 0.3,
-                            onComplete: () => {
-                                currentIndex++;
-                                playNext();
-                            }
-                        });
-                    };
+                    // 只在非 first-animation 时设置点击事件
+                    if (sequence[currentIndex] !== 'excellent') {
+                        nextBtn.onclick = () => {
+                            gsap.to(currentElement, {
+                                opacity: 0,
+                                duration: 0.3,
+                                onComplete: () => {
+                                    currentIndex++;
+                                    playNext();
+                                }
+                            });
+                        };
+                    } else {
+                        // 如果是 first-animation，1秒后自动进入下一个动画
+                        setTimeout(() => {
+                            gsap.to(currentElement, {
+                                opacity: 0,
+                                duration: 0.3,
+                                onComplete: () => {
+                                    currentIndex++;
+                                    playNext();
+                                }
+                            });
+                        }, 1000);
+                    }
                 });
             }
 
@@ -901,8 +908,18 @@
             playAnimationSequence(AnimationSequences.newBadgeUnlock, data);
         }
 
-        // 更新按鈕點擊事件
-        document.querySelector('button[onclick=""]').onclick = testGetNewBadge;
+        function getMedalPoint() {
+            hideContainer();
+            const data = {
+                medalPoint: 100,
+                onComplete: () => {
+                    console.log('Get medal point sequence finished');
+                    hideContainer();
+                }
+            };
+            playAnimationSequence(AnimationSequences.getMedalPoint, data);
+        }
+
     </script>
 </body>
 </html> 

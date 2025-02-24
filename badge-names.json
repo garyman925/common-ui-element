@@ -1,0 +1,158 @@
+{
+    "reading": {
+        "badges": [
+            {
+                "id": 1,
+                "name": "Beginner Badge",
+                "level": "beginner"
+            },
+            {
+                "id": 2,
+                "name": "Amateur Badge",
+                "level": "amateur"
+            },
+            {
+                "id": 3,
+                "name": "Debutant Badge",
+                "level": "debutant"
+            },
+            {
+                "id": 4,
+                "name": "Semi-Pro Badge",
+                "level": "semi-pro"
+            },
+            {
+                "id": 5,
+                "name": "Professional Badge",
+                "level": "professional"
+            },
+            {
+                "id": 6,
+                "name": "Rising Star Badge",
+                "level": "rising-star"
+            },
+            {
+                "id": 7,
+                "name": "World Star Badge",
+                "level": "world-star"
+            }
+        ]
+    },
+    "writing": {
+        "badges": [
+            {
+                "id": 1,
+                "name": "Beginner Badge",
+                "level": "beginner"
+            },
+            {
+                "id": 2,
+                "name": "Amateur Badge",
+                "level": "amateur"
+            },
+            {
+                "id": 3,
+                "name": "Debutant Badge",
+                "level": "debutant"
+            },
+            {
+                "id": 4,
+                "name": "Semi-Pro Badge",
+                "level": "semi-pro"
+            },
+            {
+                "id": 5,
+                "name": "Professional Badge",
+                "level": "professional"
+            },
+            {
+                "id": 6,
+                "name": "Rising Star Badge",
+                "level": "rising-star"
+            },
+            {
+                "id": 7,
+                "name": "World Star Badge",
+                "level": "world-star"
+            }
+        ]
+    },
+    "listening": {
+        "badges": [
+            {
+                "id": 1,
+                "name": "Beginner Badge",
+                "level": "beginner"
+            },
+            {
+                "id": 2,
+                "name": "Amateur Badge",
+                "level": "amateur"
+            },
+            {
+                "id": 3,
+                "name": "Debutant Badge",
+                "level": "debutant"
+            },
+            {
+                "id": 4,
+                "name": "Semi-Pro Badge",
+                "level": "semi-pro"
+            },
+            {
+                "id": 5,
+                "name": "Professional Badge",
+                "level": "professional"
+            },
+            {
+                "id": 6,
+                "name": "Rising Star Badge",
+                "level": "rising-star"
+            },
+            {
+                "id": 7,
+                "name": "World Star Badge",
+                "level": "world-star"
+            }
+        ]
+    },
+    "speaking": {
+        "badges": [
+            {
+                "id": 1,
+                "name": "Beginner Badge",
+                "level": "beginner"
+            },
+            {
+                "id": 2,
+                "name": "Amateur Badge",
+                "level": "amateur"
+            },
+            {
+                "id": 3,
+                "name": "Debutant Badge",
+                "level": "debutant"
+            },
+            {
+                "id": 4,
+                "name": "Semi-Pro Badge",
+                "level": "semi-pro"
+            },
+            {
+                "id": 5,
+                "name": "Professional Badge",
+                "level": "professional"
+            },
+            {
+                "id": 6,
+                "name": "Rising Star Badge",
+                "level": "rising-star"
+            },
+            {
+                "id": 7,
+                "name": "World Star Badge",
+                "level": "world-star"
+            }
+        ]
+    }
+} 
