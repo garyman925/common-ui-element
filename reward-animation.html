@@ -39,10 +39,15 @@
             text-align: center;
             box-shadow: 0 4px 20px rgba(0,0,0,0.2);
             opacity: 0;
-            width: 300px;
+            width: 400px;
             display: none;
             flex-direction: column;
             gap: 1rem;
+        }
+
+        .reward-container .warning-text {
+            font-size: 1rem;
+            color: red;
         }
 
         .reward-container.second-animation {
@@ -213,37 +218,6 @@
             display: none;
         }
 
-        .circle-progress {
-            width: 200px;
-            height: 200px;
-            margin: 0 auto;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .circle-progress svg {
-            position: absolute;
-            transform: rotate(-90deg);
-        }
-
-        .circle-progress circle {
-            fill: none;
-            stroke-width: 13;
-            stroke-linecap: round;
-        }
-
-        .circle-bg {
-            stroke: var(--secondary-color);
-        }
-
-        .circle-progress-bar {
-            stroke: var(--primary-color);
-            stroke-dasharray: 628;
-            stroke-dashoffset: 628;
-        }
-
         .accuracy-number {
             font-size: 4.5rem;
             color: var(--primary-color);
@@ -334,6 +308,32 @@
             max-width: 90vw;
             max-height: 90vh;
         }
+
+        .buttons-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .redo-btn {
+            background: var(--light-color);
+            color: var(--dark-color);
+            border: 2px solid var(--primary-color);
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Noto Serif', serif;
+            opacity: 0;
+        }
+
+        .redo-btn:hover {
+            background: var(--primary-color);
+            transform: scale(1.05);
+        }
     </style>
 </head>
 <body>
@@ -350,17 +350,17 @@
         </div>
         <div class="accuracy-container">
             <h2 class="reward-title">Accuracy</h2>
-            <div class="circle-progress">
-                <svg width="200" height="200">
-                    <circle class="circle-bg" cx="100" cy="100" r="90"/>
-                    <circle class="circle-progress-bar" cx="100" cy="100" r="90"/>
-                </svg>
-                <div class="accuracy-number">
-                    <span id="accuracyNum">0</span>
-                    <span class="accuracy-symbol">%</span>
-                </div>
-            </div>
             <p class="message">Well Done!</p>
+            <div class="accuracy-number">
+                <span id="accuracyNum">0</span>
+                <span class="accuracy-symbol">/10</span>
+            </div>
+            <div>Click "Comfirm" to save your marks and view answers and explanations
+                <br>Click "Redo this exercise" to attempt this exercise again
+            </div>
+            <div class="warning-text">Note: Once you have confirmed and saved your marks, you may attempt this exercise again but any marks obtained
+                from further attempts of this exercise will NOT be saved.
+            </div>
         </div>
         <div class="medal-point-container">
             <h2 class="reward-title">Medal Point</h2>
@@ -397,7 +397,10 @@
             </div>
             <p class="streak-text">Keep up the momentum!</p>
         </div>
-        <button class="next-btn">Next</button>
+        <div class="buttons-wrapper">
+            <button class="redo-btn" style="display: none;">Redo this Exercise</button>
+            <button class="next-btn">Next</button>
+        </div>
     </div>
 
     <!-- 修改 Demo 控制按鈕 -->
@@ -724,21 +727,55 @@
                 resetContainers();
                 currentElement.style.display = 'block';
                 
-                // 只在非 first-animation 时显示 next 按钮
+                // 修改按钮控制逻辑
                 if (sequence[currentIndex] !== 'excellent') {
-                    // 检查是否是序列的最后一个动画
                     const isLastAnimation = currentIndex === sequence.length - 1;
-                    nextBtn.textContent = isLastAnimation ? 'Review Answer' : 'Next';
+                    const nextBtn = document.querySelector('.next-btn');
+                    const redoBtn = document.querySelector('.redo-btn');
                     
-                    // 根据是否是最后一个动画设置不同的背景颜色
+                    // 设置按钮文本和样式
+                    const buttonConfig = {
+                        // 修改.accuracy-container的按鈕
+                        accuracy: {
+                            next: { text: 'Confirm', show: true },
+                            redo: { text: 'Redo this Exercise', show: true }
+                        },
+                        default: {
+                            next: { text: isLastAnimation ? 'Review Answer' : 'Next', show: true },
+                            redo: { text: 'Redo this Exercise', show: false }
+                        }
+                    };
+                    
+                    // 获取当前动画的按钮配置
+                    const config = buttonConfig[sequence[currentIndex]] || buttonConfig.default;
+                    
+                    // 设置 Next/Confirm 按钮
+                    nextBtn.textContent = config.next.text;
                     nextBtn.style.backgroundColor = isLastAnimation ? '#bae8e8' : 'var(--primary-color)';
-                    
                     gsap.to(nextBtn, {
-                        opacity: 1,
+                        opacity: config.next.show ? 1 : 0,
                         duration: 0.3
                     });
+                    
+                    // 设置 Redo 按钮
+                    redoBtn.textContent = config.redo.text;
+                    redoBtn.style.display = config.redo.show ? 'block' : 'none';
+                    if (config.redo.show) {
+                        gsap.to(redoBtn, {
+                            opacity: 1,
+                            duration: 0.3
+                        });
+                        
+                        // 添加 Redo 按钮点击事件
+                        redoBtn.onclick = () => {
+                            // 在这里添加重做练习的逻辑
+                            console.log('Redo exercise clicked');
+                        };
+                    }
                 } else {
-                    nextBtn.style.opacity = '0';
+                    // first-animation 时隐藏所有按钮
+                    document.querySelector('.next-btn').style.opacity = '0';
+                    document.querySelector('.redo-btn').style.display = 'none';
                 }
 
                 // 播放當前動畫
@@ -800,22 +837,13 @@
 
         // 添加一個控制圓形進度的函數
         function updateAccuracyCircle(accuracy, animate = true) {
-            const progressBar = document.querySelector('.circle-progress-bar');
             const accuracyNum = document.querySelector('#accuracyNum');
-            const circumference = 2 * Math.PI * 90;
-            const offset = circumference - (accuracy / 100) * circumference;
+            const score = Math.round(accuracy / 10);  // 将百分比转换为10分制
 
             if (animate) {
-                // 帶動畫效果的更新
-                gsap.to(progressBar, {
-                    strokeDashoffset: offset,
-                    duration: 1.5,
-                    ease: "power2.out"
-                });
-
                 gsap.to(accuracyNum, {
                     duration: 1.5,
-                    textContent: Math.round(accuracy),
+                    textContent: score,
                     snap: {
                         textContent: 1
                     },
@@ -823,8 +851,7 @@
                 });
             } else {
                 // 立即更新，無動畫
-                progressBar.style.strokeDashoffset = offset;
-                accuracyNum.textContent = Math.round(accuracy);
+                accuracyNum.textContent = score;
             }
         }
 
